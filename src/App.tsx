@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { HomePage } from './modules/home/HomePage';
-import Layout from './shared/components/layout/Layout';
+
 import { About } from './modules/about/About';
-import { ProjectsPage } from './modules/projects/Projects';
 import { Contact } from './modules/contact/Contact';
+import { HomePage } from './modules/home/HomePage';
+import { ProjectsPage } from './modules/projects/Projects';
+import Layout from './shared/components/layout/Layout';
 
 export default function App() {
   return (
