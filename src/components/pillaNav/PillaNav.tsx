@@ -22,6 +22,7 @@ export interface PillNavProps {
   pillTextColor?: string;
   onMobileMenuClick?: () => void;
   initialLoadAnimation?: boolean;
+  pillHoverColor?: string;
 }
 
 const PillNav: React.FC<PillNavProps> = ({
@@ -257,7 +258,15 @@ const PillNav: React.FC<PillNavProps> = ({
               logoRef.current = el;
             }}
           >
-            <img src={logo} alt={logoAlt} ref={logoImgRef} />
+            <img
+              src={logo}
+              alt={logoAlt}
+              ref={logoImgRef}
+              style={{
+                filter: baseColor === '#ffffff' ? 'invert(1)' : 'none',
+                transition: 'filter 0.3s ease',
+              }}
+            />
           </Link>
         ) : (
           <a
@@ -269,7 +278,15 @@ const PillNav: React.FC<PillNavProps> = ({
               logoRef.current = el;
             }}
           >
-            <img src={logo} alt={logoAlt} ref={logoImgRef} />
+            <img
+              src={logo}
+              alt={logoAlt}
+              ref={logoImgRef}
+              style={{
+                filter: baseColor === '#ffffff' ? 'invert(1)' : 'none',
+                transition: 'filter 0.3s ease',
+              }}
+            />
           </a>
         )}
 

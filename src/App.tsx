@@ -7,10 +7,15 @@ import { HomePage } from './modules/home/HomePage';
 import { ProjectsPage } from './modules/projects/Projects';
 import Layout from './shared/components/layout/Layout';
 
-export default function App() {
+interface AppProps {
+  mode: 'light' | 'dark';
+  toggleTheme: () => void;
+}
+
+export default function App({ mode, toggleTheme }: AppProps) {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Layout mode={mode} toggleTheme={toggleTheme} />}>
         <Route index element={<HomePage />} />
         <Route path="about" element={<About />} />
         <Route path="projects" element={<ProjectsPage />} />

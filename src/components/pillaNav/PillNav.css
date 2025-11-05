@@ -133,6 +133,11 @@
   will-change: transform, opacity;
 }
 
+.pill:hover {
+  background: var(--pill-hover-bg, #000); /* fondo del hover */
+  color: var(--hover-text, #fff); /* texto del hover */
+}
+
 .pill.is-active::after {
   content: '';
   position: absolute;

@@ -1,5 +1,6 @@
-import { Toolbar } from '@mui/material';
-import React from 'react';
+import { LightMode, DarkMode } from '@mui/icons-material';
+import { Toolbar, IconButton, Box, Fade } from '@mui/material';
+import React, { useState } from 'react';
 
 import logo from '@/assets/Logo_menu.svg';
 import LiquidEther from '@/components/LiquidEther/LiquidEther';
@@ -7,8 +8,24 @@ import PillNav from '@/components/pillaNav/PillaNav';
 
 import { headerLinks } from './HeaderLinks';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  mode: 'light' | 'dark';
+  toggleTheme: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ mode, toggleTheme }) => {
   const items = headerLinks.map((l) => ({ label: l.name, href: l.path }));
+
+  // Para animación del icono
+  const [iconVisible, setIconVisible] = useState(true);
+
+  const handleToggle = () => {
+    setIconVisible(false);
+    setTimeout(() => {
+      toggleTheme();
+      setIconVisible(true);
+    }, 200); // Duración de la animación
+  };
 
   return (
     <div
@@ -43,15 +60,36 @@ const Header: React.FC = () => {
           height: '100%',
         }}
       />
-      <Toolbar sx={{ justifyContent: 'center' }}>
+
+      <Toolbar sx={{ justifyContent: 'center', px: 4, position: 'relative' }}>
+        {/* Menú centrado */}
         <PillNav
           items={items}
-          baseColor="#000000"
-          pillColor="#ffffff"
-          hoveredPillTextColor="#ffffff"
-          pillTextColor="#000000"
+          baseColor={mode === 'light' ? '#000000' : '#ffffff'}
+          pillColor={mode === 'light' ? '#ffffff' : '#000000'}
+          pillTextColor={mode === 'light' ? '#000000' : '#ffffff'}
+          pillHoverColor={mode === 'light' ? '#000000' : '#ffffff'} // fondo del hover
+          hoveredPillTextColor={mode === 'light' ? '#ffffff' : '#000000'} // texto del hover
           logo={logo}
         />
+
+        {/* Botón de cambio de tema en la esquina derecha */}
+        <Box sx={{ position: 'absolute', right: 16 }}>
+          <Fade in={iconVisible}>
+            <IconButton
+              onClick={handleToggle}
+              sx={{
+                color: mode === 'light' ? '#000' : '#fff',
+                border: '1px solid',
+                borderColor: mode === 'light' ? '#000' : '#fff',
+                bgcolor: mode === 'light' ? '#fff' : '#000000ff',
+                transition: 'all 0.3s ease',
+              }}
+            >
+              {mode === 'light' ? <DarkMode /> : <LightMode />}
+            </IconButton>
+          </Fade>
+        </Box>
       </Toolbar>
     </div>
   );
