@@ -1,394 +1,338 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { FiArrowUpRight, FiGithub, FiStar } from 'react-icons/fi';
 import styled from 'styled-components';
+
+import { BentoCard } from '../../shared/components/BentoCard';
+import { BREAKPOINTS, PROJECTS } from '../home/home.constants';
+import { Project } from '../home/home.types';
 
 // ============================================
 // STYLED COMPONENTS
 // ============================================
 
-const ProjectsContainer = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
-  color: #e2e8f0;
-  font-family:
-    'Poppins',
-    'Inter',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-  padding: 6rem 2rem 4rem;
-
-  @media (max-width: 768px) {
-    padding: 5rem 1.5rem 3rem;
-  }
-`;
-
-const ContentWrapper = styled.div`
-  max-width: 1400px;
+const Section = styled.section`
+  padding: 5rem 1.5rem;
+  max-width: 1200px;
   margin: 0 auto;
-`;
 
-const PageTitle = styled(motion.h1)`
-  font-size: 3.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #6366f1, #06b6d4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 2rem;
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    padding: 3rem 1rem;
   }
 `;
 
-const Subtitle = styled(motion.p)`
-  text-align: center;
-  font-size: 1.2rem;
-  color: #94a3b8;
-  margin-bottom: 3rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
-  }
-`;
-
-const FilterContainer = styled(motion.div)`
+const SectionHeader = styled.div`
   display: flex;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 3rem;
+`;
+
+const HeaderLeft = styled.div``;
+
+const SectionTag = styled.p`
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+`;
+
+const SectionTitle = styled(motion.h2)`
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+`;
+
+const FilterRow = styled.div`
+  display: flex;
+  gap: 0.5rem;
   flex-wrap: wrap;
 `;
 
-const FilterButton = styled.button<{ $active: boolean }>`
-  padding: 0.7rem 1.5rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  font-family: 'Poppins', sans-serif;
-  background: ${(props) =>
-    props.$active ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : 'rgba(255, 255, 255, 0.05)'};
-  color: ${(props) => (props.$active ? 'white' : '#cbd5e1')};
-  border: 1px solid ${(props) => (props.$active ? 'transparent' : 'rgba(255, 255, 255, 0.1)')};
-  border-radius: 8px;
+const FilterBtn = styled.button<{ $active: boolean }>`
+  padding: 0.35rem 0.875rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  border: 1px solid
+    ${({ $active }) => ($active ? 'var(--accent)' : 'var(--card-border)')};
+  background: ${({ $active }) =>
+    $active ? 'var(--accent)' : 'transparent'};
+  color: ${({ $active }) => ($active ? '#fff' : 'var(--text-secondary)')};
+  transition: all 0.2s ease;
 
   &:hover {
-    background: ${(props) =>
-      props.$active ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : 'rgba(255, 255, 255, 0.1)'};
-    transform: translateY(-2px);
-  }
-
-  @media (max-width: 480px) {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.85rem;
+    border-color: var(--card-hover-border);
+    color: var(--text-primary);
   }
 `;
 
-const ProjectsGrid = styled(motion.div)`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+/* ---- Project card variants ---- */
+const FeaturedCard = styled(BentoCard)`
+  grid-column: span 7;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  cursor: pointer;
 
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
   }
+`;
 
-  @media (max-width: 480px) {
+const RegularCard = styled(BentoCard)`
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  cursor: pointer;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
+  }
+`;
+
+const BentoGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
     grid-template-columns: 1fr;
   }
 `;
 
-const ProjectCard = styled(motion.article)`
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    border-color: #6366f1;
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
-  }
-`;
-
-const ProjectImage = styled.div<{ $imageUrl: string }>`
-  width: 100%;
-  height: 220px;
-  background: ${(props) =>
-    props.$imageUrl ? `url(${props.$imageUrl})` : 'linear-gradient(135deg, #6366f1, #8b5cf6)'};
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.8) 100%);
-  }
-`;
-
-const ProjectContent = styled.div`
-  padding: 1.5rem;
-`;
-
-const ProjectTitle = styled.h3`
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #e2e8f0;
-  margin-bottom: 0.75rem;
-`;
-
-const ProjectDescription = styled.p`
-  font-size: 0.95rem;
-  color: #94a3b8;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-`;
-
-const TechStack = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-`;
-
-const TechTag = styled.span`
-  font-size: 0.8rem;
-  padding: 0.35rem 0.75rem;
-  background: rgba(99, 102, 241, 0.2);
-  color: #a5b4fc;
-  border-radius: 6px;
-  font-weight: 500;
-`;
-
-const ProjectLinks = styled.div`
-  display: flex;
-  gap: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-`;
-
-const ProjectLink = styled.a`
-  font-size: 0.9rem;
-  color: #06b6d4;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
+const CardTopRow = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+`;
+
+const FeaturedBadge = styled.span`
+  display: inline-flex;
+  align-items: center;
   gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: rgba(99, 102, 241, 0.08);
+`;
+
+const CategoryBadge = styled.span<{ $category: string }>`
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: ${({ $category }) =>
+    $category === 'fullstack'
+      ? 'rgba(6, 182, 212, 0.1)'
+      : $category === 'frontend'
+        ? 'rgba(99, 102, 241, 0.1)'
+        : 'rgba(139, 92, 246, 0.1)'};
+  color: ${({ $category }) =>
+    $category === 'fullstack' ? '#06b6d4' : $category === 'frontend' ? 'var(--accent)' : '#8b5cf6'};
+`;
+
+const CardTitle = styled.h3`
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+`;
+
+const CardDesc = styled.p`
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  flex: 1;
+`;
+
+const StackRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+`;
+
+const StackPill = styled.span`
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+`;
+
+const LinksRow = styled.div`
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--card-border);
+`;
+
+const CardLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
 
   &:hover {
-    color: #6366f1;
-    transform: translateX(3px);
+    color: var(--accent);
   }
 `;
 
 // ============================================
-// ANIMACIONES
+// ANIMATION
 // ============================================
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i = 0) => ({
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.45, ease: 'easeOut' },
+  }),
 };
 
 // ============================================
-// DATOS DE PROYECTOS
+// PROJECT CARD
 // ============================================
 
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  tech: string[];
-  category: string;
-  demoLink: string;
-  codeLink: string;
+interface ProjectCardProps {
+  project: Project;
+  index: number;
+  featured: boolean;
 }
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: 'Puntos',
-    description:
-      'Sistema de gestión de puntos y recompensas. Aplicación para administrar y rastrear puntos de usuarios.',
-    image: '',
-    tech: ['React', 'JavaScript', 'CSS'],
-    category: 'frontend',
-    demoLink: 'https://sojein.github.io/Puntos',
-    codeLink: 'https://github.com/SOJEIN/Puntos',
-  },
-  {
-    id: 2,
-    title: 'Movies Now',
-    description:
-      'Aplicación de películas que consume APIs para mostrar información actualizada de películas, tráilers y calificaciones.',
-    image: '',
-    tech: ['React', 'API', 'JavaScript', 'CSS'],
-    category: 'frontend',
-    demoLink: 'https://sojein.github.io/Movies_now',
-    codeLink: 'https://github.com/SOJEIN/Movies_now',
-  },
-  {
-    id: 3,
-    title: 'Login Animado',
-    description:
-      'Interfaz de login moderna con animaciones suaves y transiciones elegantes para una mejor experiencia de usuario.',
-    image: '',
-    tech: ['HTML', 'CSS', 'JavaScript', 'Animations'],
-    category: 'frontend',
-    demoLink: 'https://sojein.github.io/Login_animado',
-    codeLink: 'https://github.com/SOJEIN/Login_animado',
-  },
-  {
-    id: 4,
-    title: 'Music App',
-    description:
-      'Aplicación de música con reproductor interactivo, playlists y controles de reproducción personalizados.',
-    image: '',
-    tech: ['React', 'JavaScript', 'Web Audio API'],
-    category: 'frontend',
-    demoLink: 'https://sojein.github.io/MusicApp',
-    codeLink: 'https://github.com/SOJEIN/MusicApp',
-  },
-  {
-    id: 5,
-    title: 'Gestión de Tareas',
-    description:
-      'Aplicación completa para la gestión de tareas con funcionalidades de creación, edición y organización de proyectos.',
-    image: '',
-    tech: ['React', 'TypeScript', 'LocalStorage'],
-    category: 'frontend',
-    demoLink: 'https://sojein.github.io/gestion-tareas',
-    codeLink: 'https://github.com/SOJEIN/gestion-tareas',
-  },
-  {
-    id: 6,
-    title: 'Sass Surveys',
-    description:
-      'Sistema de encuestas y formularios dinámicos con validación y análisis de resultados en tiempo real.',
-    image: '',
-    tech: ['React', 'Sass', 'JavaScript', 'Forms'],
-    category: 'frontend',
-    demoLink: 'https://sojein.github.io/sass-surveys',
-    codeLink: 'https://github.com/SOJEIN/sass-surveys',
-  },
+const ProjectCardContent: React.FC<ProjectCardProps> = ({ project, index, featured }) => {
+  const content = (
+    <>
+      <CardTopRow>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          {featured && (
+            <FeaturedBadge>
+              <FiStar size={10} /> Featured
+            </FeaturedBadge>
+          )}
+          <CategoryBadge $category={project.category}>{project.category}</CategoryBadge>
+        </div>
+      </CardTopRow>
+      <CardTitle>{project.title}</CardTitle>
+      <CardDesc>{project.description}</CardDesc>
+      <StackRow>
+        {project.stack.map((s) => (
+          <StackPill key={s}>{s}</StackPill>
+        ))}
+      </StackRow>
+      <LinksRow>
+        <CardLink href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+          <FiGithub size={14} /> GitHub
+        </CardLink>
+        {project.demoUrl && (
+          <CardLink href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+            <FiArrowUpRight size={14} /> Live demo
+          </CardLink>
+        )}
+      </LinksRow>
+    </>
+  );
+
+  return featured ? (
+    <FeaturedCard
+      colSpan={7}
+      accent
+      as={motion.div as React.ElementType}
+      custom={index}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+    >
+      {content}
+    </FeaturedCard>
+  ) : (
+    <RegularCard
+      colSpan={5}
+      as={motion.div as React.ElementType}
+      custom={index}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+    >
+      {content}
+    </RegularCard>
+  );
+};
+
+// ============================================
+// FILTERS
+// ============================================
+
+type Filter = 'all' | 'fullstack' | 'frontend' | 'backend';
+const FILTERS: { label: string; value: Filter }[] = [
+  { label: 'All', value: 'all' },
+  { label: 'Full Stack', value: 'fullstack' },
+  { label: 'Frontend', value: 'frontend' },
+  { label: 'Backend', value: 'backend' },
 ];
 
-const categories = ['Todos', 'Frontend', 'Backend', 'Fullstack'];
-
 // ============================================
-// COMPONENTE PRINCIPAL
+// COMPONENT
 // ============================================
 
-export const ProjectsPage = () => {
-  const [activeFilter, setActiveFilter] = useState('Todos');
+export const ProjectsPage: React.FC = () => {
+  const [filter, setFilter] = useState<Filter>('all');
 
-  const filteredProjects = projects.filter((project) => {
-    if (activeFilter === 'Todos') return true;
-    return project.category === activeFilter.toLowerCase();
-  });
+  const filtered = PROJECTS.filter((p) => filter === 'all' || p.category === filter);
 
   return (
-    <ProjectsContainer>
-      <ContentWrapper>
-        <PageTitle
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Mis Proyectos
-        </PageTitle>
-
-        <Subtitle
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          Una selección de proyectos en los que he trabajado
-        </Subtitle>
-
-        {/* FILTROS */}
-        <FilterContainer
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          {categories.map((category) => (
-            <FilterButton
-              key={category}
-              $active={activeFilter === category}
-              onClick={() => setActiveFilter(category)}
-              aria-label={`Filtrar por ${category}`}
-            >
-              {category}
-            </FilterButton>
+    <Section id="projects">
+      <SectionHeader>
+        <HeaderLeft>
+          <SectionTag>Portfolio</SectionTag>
+          <SectionTitle
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45 }}
+          >
+            Selected projects
+          </SectionTitle>
+        </HeaderLeft>
+        <FilterRow>
+          {FILTERS.map((f) => (
+            <FilterBtn key={f.value} $active={filter === f.value} onClick={() => setFilter(f.value)}>
+              {f.label}
+            </FilterBtn>
           ))}
-        </FilterContainer>
+        </FilterRow>
+      </SectionHeader>
 
-        {/* GRID DE PROYECTOS */}
-        <ProjectsGrid variants={staggerContainer} initial="hidden" animate="visible" layout>
-          {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} variants={fadeInUp} layout whileHover={{ scale: 1.02 }}>
-              <ProjectImage
-                $imageUrl={project.image}
-                role="img"
-                aria-label={`Imagen de ${project.title}`}
-              />
-              <ProjectContent>
-                <ProjectTitle>{project.title}</ProjectTitle>
-                <ProjectDescription>{project.description}</ProjectDescription>
-
-                <TechStack>
-                  {project.tech.map((tech, index) => (
-                    <TechTag key={index}>{tech}</TechTag>
-                  ))}
-                </TechStack>
-
-                <ProjectLinks>
-                  <ProjectLink
-                    href={project.codeLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Ver código de ${project.title}`}
-                  >
-                    💻 Ver Código
-                  </ProjectLink>
-                </ProjectLinks>
-              </ProjectContent>
-            </ProjectCard>
-          ))}
-        </ProjectsGrid>
-      </ContentWrapper>
-    </ProjectsContainer>
+      <BentoGrid>
+        {filtered.map((project, i) => (
+          <ProjectCardContent
+            key={project.id}
+            project={project}
+            index={i}
+            featured={!!project.featured && i === 0}
+          />
+        ))}
+      </BentoGrid>
+    </Section>
   );
 };

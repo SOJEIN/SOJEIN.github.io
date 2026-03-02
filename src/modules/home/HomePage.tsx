@@ -1,484 +1,364 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { FiArrowUpRight, FiGithub, FiLinkedin, FiMapPin } from 'react-icons/fi';
 import styled from 'styled-components';
 
-import {
-  ABOUT_CONTENT,
-  ACTION_BUTTONS,
-  BREAKPOINTS,
-  COLORS,
-  FONTS,
-  HERO_CONTENT,
-  TECH_STACK,
-} from './home.constants';
+import { BentoCard } from '../../shared/components/BentoCard';
+import { ACTION_BUTTONS, BREAKPOINTS, PERSONAL, TECH_STACK } from './home.constants';
 
 // ============================================
 // STYLED COMPONENTS
 // ============================================
 
-const HomeContainer = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(135deg, ${COLORS.darker} 0%, ${COLORS.dark} 50%, #1e293b 100%);
-  color: ${COLORS.text};
-  font-family: ${FONTS.primary};
-  overflow-x: hidden;
-`;
-
-// ============================================
-// HERO SECTION
-// ============================================
-
-const HeroSection = styled.section`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  position: relative;
-
-  /* Efecto de fondo animado con gradiente */
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
-    animation: pulse 8s ease-in-out infinite;
-    pointer-events: none;
-  }
-
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 0.5;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
+const Section = styled.section`
+  padding: 6rem 1.5rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
 
   @media (max-width: ${BREAKPOINTS.tablet}) {
+    padding: 5rem 1rem 3rem;
+  }
+`;
+
+const BentoGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: auto;
+  gap: 1rem;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+/* ---- Bio Card ---- */
+const BioCard = styled(BentoCard)`
+  grid-column: span 7;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
     min-height: auto;
-    padding: 4rem 1.5rem;
   }
 `;
 
-const HeroContent = styled.div`
-  max-width: 1000px;
-  text-align: center;
-  z-index: 1;
-`;
-
-const Avatar = styled(motion.div)`
-  width: 180px;
-  height: 180px;
-  margin: 0 auto 2rem;
-  border-radius: 50%;
-  background: linear-gradient(135deg, ${COLORS.primary}, ${COLORS.secondary});
-  padding: 5px;
-  box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    width: 140px;
-    height: 140px;
-  }
-`;
-
-const AvatarImage = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  background: ${COLORS.dark};
-  border: 4px solid ${COLORS.dark};
-`;
-
-const Greeting = styled(motion.p)`
-  font-size: 1.2rem;
-  color: ${COLORS.textMuted};
+const Greeting = styled.p`
+  font-size: 0.95rem;
+  color: var(--text-secondary);
   margin-bottom: 0.5rem;
-  font-weight: 400;
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    font-size: 1rem;
-  }
+  letter-spacing: 0.02em;
 `;
 
 const Name = styled(motion.h1)`
-  font-size: 4rem;
+  font-size: clamp(2rem, 4vw, 3.25rem);
   font-weight: 700;
-  background: linear-gradient(135deg, ${COLORS.primary}, ${COLORS.accent});
+  background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin: 0.5rem 0;
-  line-height: 1.2;
-
-  @media (max-width: ${BREAKPOINTS.tablet}) {
-    font-size: 3rem;
-  }
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    font-size: 2rem;
-  }
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
 `;
 
-const Role = styled(motion.h2)`
-  font-size: 1.5rem;
-  color: ${COLORS.text};
-  font-weight: 500;
-  margin: 1rem 0 1.5rem;
-
-  @media (max-width: ${BREAKPOINTS.tablet}) {
-    font-size: 1.3rem;
-  }
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    font-size: 1.1rem;
-  }
+const Role = styled.p`
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
 `;
 
-const Description = styled(motion.p)`
-  font-size: 1.1rem;
-  color: ${COLORS.textMuted};
-  max-width: 600px;
-  margin: 0 auto 2.5rem;
-  line-height: 1.8;
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-`;
-
-const ButtonGroup = styled(motion.div)`
+const MetaRow = styled.div`
   display: flex;
-  gap: 1rem;
-  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+
+  svg {
+    flex-shrink: 0;
+  }
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 0.75rem;
   flex-wrap: wrap;
 `;
 
-const Button = styled(Link)<{ $variant: 'primary' | 'secondary' }>`
-  padding: 0.9rem 2rem;
-  font-size: 1rem;
+const CTAButton = styled.a<{ $variant: 'primary' | 'secondary' }>`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
   font-weight: 600;
+  border-radius: 0.625rem;
   text-decoration: none;
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   cursor: pointer;
-  font-family: ${FONTS.primary};
-  display: inline-block;
 
   ${({ $variant }) =>
     $variant === 'primary'
       ? `
-    background: linear-gradient(135deg, ${COLORS.primary}, ${COLORS.secondary});
-    color: white;
-    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-
-    &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
-    }
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    color: #fff;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    &:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5); }
   `
       : `
     background: transparent;
-    color: ${COLORS.text};
-    border: 2px solid ${COLORS.primary};
-
-    &:hover {
-      background: ${COLORS.primary};
-      color: white;
-      transform: translateY(-3px);
-    }
+    color: var(--text-primary);
+    border: 1px solid var(--card-border);
+    &:hover { border-color: var(--card-hover-border); background: var(--card-bg); transform: translateY(-2px); }
   `}
-
-  &:active {
-    transform: translateY(-1px);
-  }
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.9rem;
-  }
 `;
 
-// ============================================
-// ABOUT SECTION
-// ============================================
-
-const AboutSection = styled.section`
-  padding: 5rem 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+/* ---- Small stat/tech cards ---- */
+const SmallCard = styled(BentoCard)`
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 120px;
+  gap: 0.5rem;
 
   @media (max-width: ${BREAKPOINTS.tablet}) {
-    padding: 3rem 1.5rem;
+    grid-column: span 1;
   }
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 2rem;
-  color: ${COLORS.text};
-  position: relative;
-
-  &::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, ${COLORS.primary}, ${COLORS.accent});
-    margin: 1rem auto 0;
-    border-radius: 2px;
-  }
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    font-size: 2rem;
-  }
+const TechLabel = styled.span`
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
 `;
 
-const AboutText = styled(motion.p)`
-  font-size: 1.1rem;
-  line-height: 1.9;
-  color: ${COLORS.textMuted};
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
+const TechEmoji = styled.span`
+  font-size: 1.6rem;
+  line-height: 1;
 `;
 
-// ============================================
-// TECH STACK SECTION
-// ============================================
+const StatNumber = styled.span`
+  font-size: 1.75rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
 
-const TechSection = styled.section`
-  padding: 4rem 2rem 6rem;
-  background: ${COLORS.cardBg};
-  backdrop-filter: blur(10px);
+const StatLabel = styled.span`
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+`;
+
+/* ---- Location card ---- */
+const LocationCard = styled(BentoCard)`
+  grid-column: span 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
 
   @media (max-width: ${BREAKPOINTS.tablet}) {
-    padding: 3rem 1.5rem 4rem;
+    grid-column: span 1;
   }
 `;
 
-const TechGrid = styled(motion.div)`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1.5rem;
-  max-width: 900px;
-  margin: 0 auto;
+const LocationLabel = styled.p`
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+`;
 
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 1rem;
+const LocationValue = styled.p`
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+`;
+
+/* ---- Social links card ---- */
+const SocialCard = styled(BentoCard)`
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
   }
 `;
 
-const TechCard = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 1.5rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  cursor: default;
+const SocialLink = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: ${COLORS.primary};
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-  }
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    padding: 1rem;
+    border-color: var(--card-hover-border);
+    color: var(--accent);
+    transform: scale(1.1);
   }
 `;
 
-const TechIcon = styled.div`
-  font-size: 2.5rem;
-  margin-bottom: 0.75rem;
+/* ---- Tech stack row ---- */
+const TechRowCard = styled(BentoCard)`
+  grid-column: span 12;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
 
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    font-size: 2rem;
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
   }
 `;
 
-const TechName = styled.p`
-  font-size: 0.95rem;
+const TechChip = styled(motion.span)<{ $color: string }>`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
   font-weight: 500;
-  color: ${COLORS.text};
-  margin: 0;
-
-  @media (max-width: ${BREAKPOINTS.mobile}) {
-    font-size: 0.85rem;
-  }
+  border: 1px solid ${({ $color }) => $color}33;
+  color: ${({ $color }) => $color};
+  background: ${({ $color }) => $color}11;
+  white-space: nowrap;
 `;
 
 // ============================================
-// ANIMACIÓN VARIANTS
+// ANIMATION VARIANTS
 // ============================================
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i = 0) => ({
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: { opacity: 1, scale: 1 },
+    y: 0,
+    transition: { delay: i * 0.07, duration: 0.45, ease: 'easeOut' },
+  }),
 };
 
 // ============================================
-// COMPONENTE PRINCIPAL
+// COMPONENT
 // ============================================
 
-export const HomePage = () => {
+export const HomePage: React.FC = () => {
   return (
-    <HomeContainer>
-      {/* SECCIÓN HERO */}
-      <HeroSection>
-        <HeroContent>
-          <Avatar
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-          >
-            <AvatarImage
-              src={HERO_CONTENT.avatarUrl}
-              alt={HERO_CONTENT.name}
-              onError={(e) => {
-                // Fallback si no existe la imagen
-                e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                  HERO_CONTENT.name
-                )}&background=6366f1&color=fff&size=200&bold=true`;
-              }}
-            />
-          </Avatar>
-
-          <Greeting
-            variants={fadeInUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.2 }}
-          >
-            {HERO_CONTENT.greeting}
-          </Greeting>
-
-          <Name variants={fadeInUp} initial="hidden" animate="visible" transition={{ delay: 0.3 }}>
-            {HERO_CONTENT.name}
-          </Name>
-
-          <Role variants={fadeInUp} initial="hidden" animate="visible" transition={{ delay: 0.4 }}>
-            {HERO_CONTENT.role}
-          </Role>
-
-          <Description
-            variants={fadeInUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.5 }}
-          >
-            {HERO_CONTENT.description}
-          </Description>
-
-          <ButtonGroup
-            variants={fadeInUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.6 }}
-          >
-            {ACTION_BUTTONS.map((button) => (
-              <Button
-                key={button.label}
-                to={button.to}
-                $variant={button.variant}
-                aria-label={button.label}
-              >
-                {button.label}
-              </Button>
+    <Section id="hero">
+      <BentoGrid>
+        {/* Bio Card — 7 cols */}
+        <BioCard colSpan={7} accent>
+          <div>
+            <Greeting>{PERSONAL.greeting}</Greeting>
+            <Name
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {PERSONAL.name}
+            </Name>
+            <Role>{PERSONAL.role}</Role>
+            <MetaRow>
+              <FiMapPin size={14} />
+              {PERSONAL.location}
+            </MetaRow>
+          </div>
+          <ButtonGroup>
+            {ACTION_BUTTONS.map((btn) => (
+              <CTAButton key={btn.label} href={btn.href} $variant={btn.variant}>
+                {btn.label}
+                <FiArrowUpRight size={14} />
+              </CTAButton>
             ))}
           </ButtonGroup>
-        </HeroContent>
-      </HeroSection>
+        </BioCard>
 
-      {/* SECCIÓN SOBRE MÍ */}
-      <AboutSection>
-        <SectionTitle
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-        >
-          {ABOUT_CONTENT.title}
-        </SectionTitle>
+        {/* React chip */}
+        <SmallCard colSpan={2}>
+          <TechEmoji>⚛</TechEmoji>
+          <TechLabel>React</TechLabel>
+        </SmallCard>
 
-        <AboutText
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          {ABOUT_CONTENT.text}
-        </AboutText>
-      </AboutSection>
+        {/* TypeScript chip */}
+        <SmallCard colSpan={3}>
+          <TechEmoji style={{ fontSize: '1.2rem', fontWeight: 700, color: '#3178c6' }}>TS</TechEmoji>
+          <TechLabel>TypeScript</TechLabel>
+        </SmallCard>
 
-      {/* SECCIÓN TECH STACK */}
-      <TechSection>
-        <SectionTitle
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-        >
-          Tecnologías
-        </SectionTitle>
+        {/* Node chip */}
+        <SmallCard colSpan={2}>
+          <TechEmoji>⬡</TechEmoji>
+          <TechLabel>Node.js</TechLabel>
+        </SmallCard>
 
-        <TechGrid
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {TECH_STACK.map((tech) => (
-            <TechCard
+        {/* Location */}
+        <LocationCard colSpan={3}>
+          <LocationLabel>Based in</LocationLabel>
+          <LocationValue>📍 {PERSONAL.location}</LocationValue>
+        </LocationCard>
+
+        {/* Stats — experience */}
+        <SmallCard colSpan={3}>
+          <StatNumber>{PERSONAL.experience} yrs</StatNumber>
+          <StatLabel>experience</StatLabel>
+        </SmallCard>
+
+        {/* Stats — projects */}
+        <SmallCard colSpan={3}>
+          <StatNumber>{PERSONAL.projectCount}</StatNumber>
+          <StatLabel>projects</StatLabel>
+        </SmallCard>
+
+        {/* Social links */}
+        <SocialCard colSpan={2}>
+          <SocialLink href={PERSONAL.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <FiGithub />
+          </SocialLink>
+          <SocialLink href={PERSONAL.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <FiLinkedin />
+          </SocialLink>
+        </SocialCard>
+
+        {/* Full tech stack row */}
+        <TechRowCard colSpan={12}>
+          {TECH_STACK.map((tech, i) => (
+            <TechChip
               key={tech.name}
-              variants={scaleIn}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              $color={tech.color}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              whileHover={{ scale: 1.07 }}
             >
-              <TechIcon role="img" aria-label={tech.name}>
-                {tech.icon}
-              </TechIcon>
-              <TechName>{tech.name}</TechName>
-            </TechCard>
+              {tech.name}
+            </TechChip>
           ))}
-        </TechGrid>
-      </TechSection>
-    </HomeContainer>
+        </TechRowCard>
+      </BentoGrid>
+    </Section>
   );
 };

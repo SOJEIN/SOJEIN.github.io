@@ -1,433 +1,300 @@
 import { motion } from 'framer-motion';
+import React from 'react';
+import { FiCode, FiLayers, FiServer, FiTool } from 'react-icons/fi';
 import styled from 'styled-components';
+
+import { BentoCard } from '../../shared/components/BentoCard';
+import { BREAKPOINTS, PERSONAL } from '../home/home.constants';
 
 // ============================================
 // STYLED COMPONENTS
 // ============================================
 
-const AboutContainer = styled.div`
-  min-height: 100vh;
-  background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
-  color: #e2e8f0;
-  font-family:
-    'Poppins',
-    'Inter',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-  padding: 6rem 2rem 4rem;
-
-  @media (max-width: 768px) {
-    padding: 5rem 1.5rem 3rem;
-  }
-`;
-
-const ContentWrapper = styled.div`
+const Section = styled.section`
+  padding: 5rem 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
-`;
 
-const PageTitle = styled(motion.h1)`
-  font-size: 3.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #6366f1, #06b6d4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 2rem;
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    padding: 3rem 1rem;
   }
 `;
 
-const Subtitle = styled(motion.p)`
-  text-align: center;
-  font-size: 1.2rem;
-  color: #94a3b8;
-  margin-bottom: 4rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
-  }
+const SectionHeader = styled.div`
+  margin-bottom: 2rem;
 `;
 
-const Section = styled(motion.section)`
-  margin-bottom: 4rem;
-`;
-
-const SectionTitle = styled.h2`
-  font-size: 2rem;
+const SectionTag = styled.p`
+  font-size: 0.8rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: #e2e8f0;
-  position: relative;
-  padding-left: 1.5rem;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 5px;
-    height: 80%;
-    background: linear-gradient(180deg, #6366f1, #8b5cf6);
-    border-radius: 3px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 1.6rem;
-  }
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
 `;
 
-const IntroText = styled.p`
-  font-size: 1.1rem;
-  line-height: 1.9;
-  color: #cbd5e1;
-  margin-bottom: 1.5rem;
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
+const SectionTitle = styled(motion.h2)`
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
 `;
 
-const SkillsGrid = styled.div`
+const BentoGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
 
-  @media (max-width: 480px) {
+  @media (max-width: ${BREAKPOINTS.tablet}) {
     grid-template-columns: 1fr;
   }
 `;
 
-const SkillCard = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 2rem;
-  transition: all 0.3s ease;
+const BioMainCard = styled(BentoCard)`
+  grid-column: span 7;
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #6366f1;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
   }
 `;
 
-const SkillTitle = styled.h3`
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #6366f1;
-  margin-bottom: 1rem;
+const BioText = styled.p`
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  white-space: pre-line;
+`;
+
+const SkillCard = styled(BentoCard)`
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
+  }
+`;
+
+const SkillCardSmall = styled(BentoCard)`
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
+  }
+`;
+
+const SkillCardHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+`;
+
+const SkillIcon = styled.div`
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1rem;
+  flex-shrink: 0;
+`;
+
+const SkillTitle = styled.h3`
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
 `;
 
 const SkillList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 `;
 
-const SkillItem = styled.li`
-  font-size: 1rem;
-  color: #cbd5e1;
-  padding: 0.5rem 0;
-  padding-left: 1.5rem;
-  position: relative;
-
-  &::before {
-    content: '▹';
-    position: absolute;
-    left: 0;
-    color: #6366f1;
-    font-weight: bold;
-  }
-`;
-
-const ExperienceTimeline = styled.div`
-  margin-top: 2rem;
-`;
-
-const TimelineItem = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.05);
-  border-left: 4px solid #6366f1;
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateX(5px);
-  }
-`;
-
-const TimelineTitle = styled.h4`
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #e2e8f0;
-  margin-bottom: 0.5rem;
-`;
-
-const TimelineRole = styled.p`
-  font-size: 1rem;
-  color: #06b6d4;
-  margin-bottom: 0.5rem;
+const SkillPill = styled.li`
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.775rem;
   font-weight: 500;
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
 `;
 
-const TimelineDate = styled.span`
-  font-size: 0.9rem;
-  color: #94a3b8;
-  font-style: italic;
-`;
-
-const TimelineDescription = styled.p`
-  font-size: 1rem;
-  color: #cbd5e1;
-  line-height: 1.7;
-  margin-top: 1rem;
-`;
-
-const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-`;
-
-const StatCard = styled(motion.div)`
+const StatCard = styled(BentoCard)`
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 2rem;
-  background: rgba(99, 102, 241, 0.1);
-  border-radius: 16px;
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  gap: 0.25rem;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
+  }
 `;
 
-const StatNumber = styled.div`
-  font-size: 3rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+const StatNum = styled.span`
+  font-size: 2.25rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), #06b6d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.5rem;
 `;
 
-const StatLabel = styled.div`
-  font-size: 1rem;
-  color: #94a3b8;
+const StatDesc = styled.span`
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+`;
+
+const FunCard = styled(BentoCard)`
+  grid-column: span 7;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    grid-column: span 1;
+  }
+`;
+
+const FunTitle = styled.h3`
+  font-size: 0.85rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+`;
+
+const FunText = styled.p`
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
 `;
 
 // ============================================
-// ANIMACIONES
+// DATA
 // ============================================
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
-};
+const SKILLS = [
+  {
+    icon: <FiCode />,
+    title: 'Frontend',
+    items: ['React', 'TypeScript', 'Next.js', 'Styled-Components', 'Framer Motion', 'Vite'],
+  },
+  {
+    icon: <FiServer />,
+    title: 'Backend',
+    items: ['Node.js', 'NestJS', 'Laravel', '.NET Core', 'REST APIs', 'JWT'],
+  },
+  {
+    icon: <FiLayers />,
+    title: 'Databases',
+    items: ['PostgreSQL', 'MySQL', 'SQL Server', 'Firebase', 'MongoDB'],
+  },
+  {
+    icon: <FiTool />,
+    title: 'DevOps & Tools',
+    items: ['Docker', 'Git', 'GitHub Actions', 'Linux', 'Agile / Scrum'],
+  },
+];
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
+const STATS = [
+  { num: '6+', desc: 'Years of experience' },
+  { num: '25+', desc: 'Projects delivered' },
+];
+
+// ============================================
+// ANIMATION
+// ============================================
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i = 0) => ({
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.45, ease: 'easeOut' },
+  }),
 };
 
 // ============================================
-// DATOS DEL COMPONENTE
+// COMPONENT
 // ============================================
 
-const skills = [
-  {
-    title: '🎨 Frontend',
-    items: [
-      'React & Next.js',
-      'TypeScript',
-      'HTML5 & CSS3',
-      'Styled Components',
-      'Tailwind CSS',
-      'Responsive Design',
-    ],
-  },
-  {
-    title: '⚙️ Backend',
-    items: [
-      'Node.js & Express',
-      'REST APIs',
-      'GraphQL',
-      'PostgreSQL & MongoDB',
-      'Authentication & Security',
-    ],
-  },
-  {
-    title: '🛠️ Herramientas',
-    items: ['Git & GitHub', 'Docker', 'Vite & Webpack', 'Jest & Testing Library', 'CI/CD', 'Figma'],
-  },
-];
-
-const experience = [
-  {
-    title: 'Empresa Tech Solutions',
-    role: 'Desarrollador Frontend Senior',
-    date: '2023 - Presente',
-    description:
-      'Desarrollo de aplicaciones web modernas con React y TypeScript. Liderazgo de equipo y arquitectura de proyectos.',
-  },
-  {
-    title: 'StartUp Digital',
-    role: 'Desarrollador Full Stack',
-    date: '2021 - 2023',
-    description:
-      'Implementación de features end-to-end, desde diseño hasta deployment. Stack: React, Node.js, PostgreSQL.',
-  },
-  {
-    title: 'Freelance',
-    role: 'Desarrollador Web',
-    date: '2020 - 2021',
-    description:
-      'Desarrollo de sitios web y aplicaciones para diversos clientes. Enfoque en UX/UI y performance.',
-  },
-];
-
-const stats = [
-  { number: '3+', label: 'Años de experiencia' },
-  { number: '25+', label: 'Proyectos completados' },
-  { number: '15+', label: 'Clientes satisfechos' },
-  { number: '100%', label: 'Código con amor' },
-];
-
-// ============================================
-// COMPONENTE PRINCIPAL
-// ============================================
-
-export const About = () => {
+export const About: React.FC = () => {
   return (
-    <AboutContainer>
-      <ContentWrapper>
-        <PageTitle
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+    <Section id="about">
+      <SectionHeader>
+        <SectionTag>About me</SectionTag>
+        <SectionTitle
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45 }}
         >
-          Sobre Mí
-        </PageTitle>
+          Crafting software that matters
+        </SectionTitle>
+      </SectionHeader>
 
-        <Subtitle
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          Conoce más sobre mi trayectoria y habilidades profesionales
-        </Subtitle>
+      <BentoGrid>
+        {/* Bio */}
+        <BioMainCard colSpan={7} accent>
+          <BioText>{PERSONAL.bio}</BioText>
+        </BioMainCard>
 
-        {/* INTRODUCCIÓN */}
-        <Section
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-        >
-          <SectionTitle>¿Quién soy?</SectionTitle>
-          <IntroText>
-            Soy un desarrollador frontend apasionado por crear experiencias digitales excepcionales.
-            Mi especialidad es transformar diseños complejos en aplicaciones web interactivas,
-            accesibles y de alto rendimiento.
-          </IntroText>
-          <IntroText>
-            Con más de 3 años de experiencia en el desarrollo web, he trabajado en proyectos que van
-            desde startups innovadoras hasta empresas consolidadas. Me encanta aprender nuevas
-            tecnologías y compartir conocimientos con la comunidad.
-          </IntroText>
-          <IntroText>
-            Mi enfoque está en escribir código limpio, mantenible y escalable, siempre con las
-            mejores prácticas de la industria. Creo firmemente en el poder de la colaboración y el
-            aprendizaje continuo.
-          </IntroText>
-        </Section>
+        {/* Stats */}
+        {STATS.map((s, i) => (
+          <StatCard key={s.num} colSpan={i === 0 ? 3 : 2}>
+            <StatNum>{s.num}</StatNum>
+            <StatDesc>{s.desc}</StatDesc>
+          </StatCard>
+        ))}
 
-        {/* ESTADÍSTICAS */}
-        <Section
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <StatsGrid>
-            {stats.map((stat, index) => (
-              <StatCard key={index} variants={fadeInUp} whileHover={{ scale: 1.05 }}>
-                <StatNumber>{stat.number}</StatNumber>
-                <StatLabel>{stat.label}</StatLabel>
-              </StatCard>
-            ))}
-          </StatsGrid>
-        </Section>
+        {/* Skill cards */}
+        {SKILLS.map((skill, i) => {
+          const Card = i < 2 ? SkillCard : SkillCardSmall;
+          return (
+            <Card key={skill.title} colSpan={i < 2 ? 5 : 4}>
+              <motion.div
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+              >
+                <SkillCardHeader>
+                  <SkillIcon>{skill.icon}</SkillIcon>
+                  <SkillTitle>{skill.title}</SkillTitle>
+                </SkillCardHeader>
+              </motion.div>
+              <SkillList>
+                {skill.items.map((item) => (
+                  <SkillPill key={item}>{item}</SkillPill>
+                ))}
+              </SkillList>
+            </Card>
+          );
+        })}
 
-        {/* HABILIDADES */}
-        <Section
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <SectionTitle>Habilidades Técnicas</SectionTitle>
-          <SkillsGrid>
-            {skills.map((skill, index) => (
-              <SkillCard key={index} variants={fadeInUp} whileHover={{ scale: 1.02 }}>
-                <SkillTitle>{skill.title}</SkillTitle>
-                <SkillList>
-                  {skill.items.map((item, i) => (
-                    <SkillItem key={i}>{item}</SkillItem>
-                  ))}
-                </SkillList>
-              </SkillCard>
-            ))}
-          </SkillsGrid>
-        </Section>
-
-        {/* EXPERIENCIA */}
-        <Section
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <SectionTitle>Experiencia Profesional</SectionTitle>
-          <ExperienceTimeline>
-            {experience.map((exp, index) => (
-              <TimelineItem key={index} variants={fadeInUp}>
-                <TimelineTitle>{exp.title}</TimelineTitle>
-                <TimelineRole>{exp.role}</TimelineRole>
-                <TimelineDate>{exp.date}</TimelineDate>
-                <TimelineDescription>{exp.description}</TimelineDescription>
-              </TimelineItem>
-            ))}
-          </ExperienceTimeline>
-        </Section>
-      </ContentWrapper>
-    </AboutContainer>
+        {/* Fun fact */}
+        <FunCard colSpan={7}>
+          <FunTitle>Fun fact</FunTitle>
+          <FunText>
+            Based in Bogotá, Colombia — one of Latin America&apos;s fastest-growing tech hubs.
+            I love combining solid engineering fundamentals with modern design sensibilities
+            to build products that users actually enjoy.
+          </FunText>
+        </FunCard>
+      </BentoGrid>
+    </Section>
   );
 };

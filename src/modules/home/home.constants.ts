@@ -1,20 +1,8 @@
-import { ActionButton, TechIcon } from './home.types';
+import { ActionButton, Project, TechIcon } from './home.types';
 
 // ============================================
-// CONSTANTES DE DISEÑO Y CONTENIDO
+// DESIGN TOKENS
 // ============================================
-
-export const COLORS = {
-  primary: '#6366f1', // Indigo
-  secondary: '#8b5cf6', // Violet
-  accent: '#06b6d4', // Cyan
-  dark: '#0f172a', // Slate 900
-  darker: '#020617', // Slate 950
-  light: '#f1f5f9', // Slate 100
-  text: '#e2e8f0', // Slate 200
-  textMuted: '#94a3b8', // Slate 400
-  cardBg: 'rgba(15, 23, 42, 0.6)', // Transparente oscuro
-} as const;
 
 export const BREAKPOINTS = {
   mobile: '480px',
@@ -23,52 +11,105 @@ export const BREAKPOINTS = {
   wide: '1280px',
 } as const;
 
-export const FONTS = {
-  primary: "'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-  mono: "'Fira Code', 'Consolas', monospace",
-} as const;
-
 // ============================================
-// CONTENIDO DEL HOME
+// PERSONAL INFO
 // ============================================
 
-export const HERO_CONTENT = {
-  greeting: '👋 Hola, soy',
+export const PERSONAL = {
   name: 'Jeisson Ochoa',
-  role: 'Desarrollador Frontend especializado en React',
-  description:
-    'Creo experiencias web modernas, interactivas y accesibles utilizando las últimas tecnologías del ecosistema JavaScript.',
-  avatarUrl: 'https://avatars.githubusercontent.com/u/YOUR_GITHUB_ID?v=4', // GitHub avatar
+  role: 'Full Stack Developer',
+  roleEs: 'Desarrollador Full Stack',
+  greeting: 'Hi, I\'m',
+  location: 'Bogotá, Colombia',
+  experience: '6',
+  projectCount: '25+',
+  email: 'YOUR_EMAIL',
+  linkedinUrl: 'YOUR_LINKEDIN_URL',
+  githubUrl: 'https://github.com/SOJEIN',
+  bio: `Full Stack Developer with 6+ years of experience building scalable web applications.
+    I specialize in React, TypeScript, and modern backend technologies.
+    Passionate about clean code, great UX, and delivering real business value.`,
+  avatar: 'https://avatars.githubusercontent.com/SOJEIN?v=4',
 } as const;
 
-export const ABOUT_CONTENT = {
-  title: 'Sobre mí',
-  text: `Soy un desarrollador frontend apasionado por crear interfaces intuitivas y experiencias 
-    de usuario excepcionales. Me especializo en React, TypeScript y el diseño de sistemas 
-    escalables. Siempre estoy aprendiendo nuevas tecnologías y mejores prácticas para 
-    entregar soluciones de alta calidad.`,
-} as const;
+// ============================================
+// TECH STACK
+// ============================================
 
-export const ACTION_BUTTONS: ActionButton[] = [
+export const TECH_STACK: TechIcon[] = [
+  { name: 'React', icon: '⚛', color: '#61dafb' },
+  { name: 'TypeScript', icon: 'TS', color: '#3178c6' },
+  { name: 'Node.js', icon: '⬡', color: '#339933' },
+  { name: 'NestJS', icon: 'N', color: '#e0234e' },
+  { name: '.NET Core', icon: '⬡', color: '#512bd4' },
+  { name: 'Laravel', icon: 'L', color: '#ff2d20' },
+  { name: 'Docker', icon: '🐳', color: '#2496ed' },
+  { name: 'PostgreSQL', icon: '🐘', color: '#336791' },
+  { name: 'Firebase', icon: '🔥', color: '#ffca28' },
+  { name: 'Electron', icon: '⚡', color: '#47848f' },
+];
+
+// ============================================
+// REAL PROJECTS
+// ============================================
+
+export const PROJECTS: Project[] = [
   {
-    label: 'Ver Proyectos',
-    to: '/projects',
-    variant: 'primary',
+    id: 'billing-system',
+    title: 'Billing System',
+    description:
+      'Full-stack billing platform built with Laravel + React + TypeScript, containerized with Docker. Handles invoicing, client management, and real-time reporting.',
+    stack: ['Laravel', 'React', 'TypeScript', 'Docker', 'MySQL'],
+    category: 'fullstack',
+    githubUrl: 'https://github.com/SOJEIN/billing-system',
+    featured: true,
   },
   {
-    label: 'Contáctame',
-    to: '/contact',
-    variant: 'secondary',
+    id: 'sass-surveys',
+    title: 'SaaS Surveys',
+    description:
+      'Survey platform as a service. React frontend consuming a NestJS REST API with TypeScript. Multi-tenant architecture with analytics dashboard.',
+    stack: ['React', 'NestJS', 'TypeScript', 'PostgreSQL'],
+    category: 'fullstack',
+    githubUrl: 'https://github.com/SOJEIN/sass-surveys',
+    featured: true,
+  },
+  {
+    id: 'music-app',
+    title: 'MusicApp',
+    description:
+      'Cross-platform desktop music player built with Electron + React + Firebase. Real-time sync, playlist management, and offline capabilities.',
+    stack: ['Electron', 'React', 'Firebase', 'JavaScript'],
+    category: 'frontend',
+    githubUrl: 'https://github.com/SOJEIN/MusicApp',
+    demoUrl: 'https://github.com/SOJEIN/MusicApp/releases',
+    featured: true,
+  },
+  {
+    id: 'task-management',
+    title: 'Task Management System',
+    description:
+      'Enterprise task manager with React frontend and .NET Core API. JWT authentication, role-based access control, and real-time notifications.',
+    stack: ['React', '.NET Core', 'JWT', 'SQL Server', 'TypeScript'],
+    category: 'fullstack',
+    githubUrl: 'https://github.com/SOJEIN/TaskManagementSystem',
+    featured: false,
   },
 ];
 
-export const TECH_STACK: TechIcon[] = [
-  { name: 'React', icon: '⚛️', color: '#61dafb' },
-  { name: 'TypeScript', icon: '📘', color: '#3178c6' },
-  { name: 'Node.js', icon: '🟢', color: '#339933' },
-  { name: 'JavaScript', icon: '💛', color: '#f7df1e' },
-  { name: 'CSS3', icon: '🎨', color: '#1572b6' },
-  { name: 'Git', icon: '🔀', color: '#f05032' },
-  { name: 'Vite', icon: '⚡', color: '#646cff' },
-  { name: 'Styled', icon: '💅', color: '#db7093' },
+// ============================================
+// ACTION BUTTONS
+// ============================================
+
+export const ACTION_BUTTONS: ActionButton[] = [
+  {
+    label: 'View Projects',
+    href: '#projects',
+    variant: 'primary',
+  },
+  {
+    label: 'Contact me',
+    href: '#contact',
+    variant: 'secondary',
+  },
 ];

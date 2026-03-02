@@ -1,7 +1,3 @@
-// ============================================
-// TIPOS Y CONSTANTES PARA EL MÓDULO HOME
-// ============================================
-
 export interface TechIcon {
   name: string;
   icon: string;
@@ -10,6 +6,17 @@ export interface TechIcon {
 
 export interface ActionButton {
   label: string;
-  to: string;
+  href: string;
   variant: 'primary' | 'secondary';
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  stack: string[];
+  category: 'fullstack' | 'frontend' | 'backend';
+  githubUrl: string;
+  demoUrl?: string;
+  featured?: boolean;
 }

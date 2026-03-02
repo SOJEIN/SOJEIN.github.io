@@ -4,8 +4,8 @@ export interface HeaderLink {
 }
 
 export const headerLinks: HeaderLink[] = [
-  { name: 'Home', path: '/' },
-  { name: 'Projects', path: '/projects' },
-  { name: 'About', path: '/about' },
-  { name: 'Contact', path: '/contact' },
+  { name: 'Home', path: '#hero' },
+  { name: 'About', path: '#about' },
+  { name: 'Projects', path: '#projects' },
+  { name: 'Contact', path: '#contact' },
 ];

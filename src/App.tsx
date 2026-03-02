@@ -1,5 +1,4 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
 
 import { About } from './modules/about/About';
 import { Contact } from './modules/contact/Contact';
@@ -14,13 +13,11 @@ interface AppProps {
 
 export default function App({ mode, toggleTheme }: AppProps) {
   return (
-    <Routes>
-      <Route path="/" element={<Layout mode={mode} toggleTheme={toggleTheme} />}>
-        <Route index element={<HomePage />} />
-        <Route path="about" element={<About />} />
-        <Route path="projects" element={<ProjectsPage />} />
-        <Route path="contact" element={<Contact />} />
-      </Route>
-    </Routes>
+    <Layout mode={mode} toggleTheme={toggleTheme}>
+      <HomePage />
+      <About />
+      <ProjectsPage />
+      <Contact />
+    </Layout>
   );
 }
