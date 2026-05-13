@@ -131,6 +131,14 @@
       "task-management": {
         "title": "Task Management System",
         "description": "Enterprise task manager with React frontend and .NET Core API. JWT authentication, role-based access control, and real-time notifications."
+      },
+      "orbit": {
+        "title": "Orbit",
+        "description": "React Native productivity app for managing daily routines and one-time tasks. Calendar view, real-time Firebase sync, Zustand + RTK Query state management."
+      },
+      "fotostory": {
+        "title": "FotoStory",
+        "description": "Social photo-sharing platform with Google authentication, interactive gallery, likes, and real-time comments. Built with React + Vite and Firebase."
       }
     }
   },

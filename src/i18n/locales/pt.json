@@ -131,6 +131,14 @@
       "task-management": {
         "title": "Sistema de Gerenciamento de Tarefas",
         "description": "Gerenciador de tarefas empresarial com frontend em React e API em .NET Core. Autenticação JWT, controle de acesso por função e notificações em tempo real."
+      },
+      "orbit": {
+        "title": "Orbit",
+        "description": "App móvel de produtividade em React Native para gerenciar rotinas e tarefas diárias. Calendário integrado, sincronização Firebase em tempo real e arquitetura Feature-Sliced."
+      },
+      "fotostory": {
+        "title": "FotoStory",
+        "description": "Plataforma social de fotos com autenticação Google, galeria interativa, curtidas e comentários em tempo real. Construída com React + Vite e Firebase."
       }
     }
   },

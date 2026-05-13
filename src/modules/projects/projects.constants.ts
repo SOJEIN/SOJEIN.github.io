@@ -36,4 +36,19 @@ export const PROJECTS: Project[] = [
     githubUrl: 'https://github.com/SOJEIN/TaskManagementSystem',
     featured: false,
   },
+  {
+    id: 'orbit',
+    stack: ['React Native', 'TypeScript', 'Firebase', 'Zustand', 'RTK Query'],
+    category: 'frontend',
+    githubUrl: 'https://github.com/SOJEIN/Orbit',
+    featured: false,
+  },
+  {
+    id: 'fotostory',
+    stack: ['React', 'Vite', 'Firebase', 'Zustand', 'Material-UI'],
+    category: 'frontend',
+    githubUrl: 'https://github.com/SOJEIN/fotostory',
+    demoUrl: 'https://sojein.github.io/fotostory',
+    featured: false,
+  },
 ];
