@@ -22,8 +22,12 @@
   --card-bg: rgba(255, 255, 255, 0.9);
   --card-border: rgba(0, 0, 0, 0.06);
   --card-hover-border: rgba(99, 102, 241, 0.3);
-  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
   --radius-card: 1.25rem;
+
+  /* Dot grid */
+  --dot-color: rgba(99, 102, 241, 0.1);
+  --dot-size: 28px;
 
   font-family: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
   line-height: 1.5;
@@ -46,7 +50,10 @@
   --card-bg: rgba(255, 255, 255, 0.03);
   --card-border: rgba(255, 255, 255, 0.08);
   --card-hover-border: rgba(99, 102, 241, 0.4);
-  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+
+  /* Dot grid dark */
+  --dot-color: rgba(99, 102, 241, 0.07);
 }
 
 /* ===== Base ===== */
@@ -61,6 +68,17 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dot-grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: var(--dot-size) var(--dot-size);
+  pointer-events: none;
+  z-index: 0;
 }
 
 a {
@@ -85,6 +103,8 @@ button {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 .layout {

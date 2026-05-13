@@ -1,0 +1,39 @@
+import { Project } from './projects.types';
+
+export const CATEGORY_COLORS: Record<Project['category'], { bg: string; text: string; bar: string }> = {
+  fullstack: { bg: 'rgba(6, 182, 212, 0.1)', text: '#06b6d4', bar: '#06b6d4' },
+  frontend: { bg: 'rgba(99, 102, 241, 0.1)', text: 'var(--accent)', bar: '#6366f1' },
+  backend: { bg: 'rgba(139, 92, 246, 0.1)', text: '#8b5cf6', bar: '#8b5cf6' },
+};
+
+export const PROJECTS: Project[] = [
+  {
+    id: 'billing-system',
+    stack: ['Laravel', 'React', 'TypeScript', 'Docker', 'MySQL'],
+    category: 'fullstack',
+    githubUrl: 'https://github.com/SOJEIN/billing-system',
+    featured: true,
+  },
+  {
+    id: 'sass-surveys',
+    stack: ['React', 'NestJS', 'TypeScript', 'PostgreSQL'],
+    category: 'fullstack',
+    githubUrl: 'https://github.com/SOJEIN/sass-surveys',
+    featured: true,
+  },
+  {
+    id: 'music-app',
+    stack: ['Electron', 'React', 'Firebase', 'JavaScript'],
+    category: 'frontend',
+    githubUrl: 'https://github.com/SOJEIN/MusicApp',
+    demoUrl: 'https://github.com/SOJEIN/MusicApp/releases',
+    featured: true,
+  },
+  {
+    id: 'task-management',
+    stack: ['React', '.NET Core', 'JWT', 'SQL Server', 'TypeScript'],
+    category: 'fullstack',
+    githubUrl: 'https://github.com/SOJEIN/TaskManagementSystem',
+    featured: false,
+  },
+];

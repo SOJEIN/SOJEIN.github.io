@@ -1,9 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IoMoon, IoSunny } from 'react-icons/io5';
 import styled from 'styled-components';
 
 import logo from '@/assets/Logo_menu.svg';
 import PillNav from '@/components/pillaNav/PillaNav';
+import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 
 import { headerLinks } from './HeaderLinks';
 
@@ -11,6 +13,8 @@ interface HeaderProps {
   mode: 'light' | 'dark';
   toggleTheme: () => void;
 }
+
+const HEADER_HEIGHT = '64px';
 
 const HeaderWrapper = styled.header<{ $mode: 'light' | 'dark' }>`
   position: sticky;
@@ -34,17 +38,33 @@ const HeaderContent = styled.div`
   padding: 0 1.5rem;
   max-width: 1280px;
   margin: 0 auto;
+  height: ${HEADER_HEIGHT};
   position: relative;
 `;
 
-const ThemeButton = styled.button<{ $mode: 'light' | 'dark' }>`
+const RightActions = styled.div`
   position: absolute;
   right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 101;
+
+  /* On mobile: tuck left of the hamburger button (~42px + 1rem padding from right) */
+  @media (max-width: 768px) {
+    right: 4rem;
+    gap: 0.35rem;
+  }
+`;
+
+const ThemeButton = styled.button<{ $mode: 'light' | 'dark' }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 1px solid
     ${({ $mode }) =>
@@ -53,8 +73,9 @@ const ThemeButton = styled.button<{ $mode: 'light' | 'dark' }>`
   color: ${({ $mode }) => ($mode === 'light' ? '#000000' : '#ffffff')};
   cursor: pointer;
   transition: all 0.25s ease;
-  font-size: 18px;
+  font-size: 17px;
   padding: 0;
+  flex-shrink: 0;
 
   &:hover {
     transform: scale(1.1);
@@ -63,7 +84,8 @@ const ThemeButton = styled.button<{ $mode: 'light' | 'dark' }>`
 `;
 
 const Header: React.FC<HeaderProps> = ({ mode, toggleTheme }) => {
-  const items = headerLinks.map((l) => ({ label: l.name, href: l.path }));
+  const { t } = useTranslation();
+  const items = headerLinks.map((l) => ({ label: t(l.nameKey), href: l.path }));
 
   return (
     <HeaderWrapper $mode={mode}>
@@ -77,9 +99,12 @@ const Header: React.FC<HeaderProps> = ({ mode, toggleTheme }) => {
           hoveredPillTextColor={mode === 'light' ? '#ffffff' : '#000000'}
           logo={logo}
         />
-        <ThemeButton $mode={mode} onClick={toggleTheme} aria-label="Toggle theme">
-          {mode === 'light' ? <IoMoon /> : <IoSunny />}
-        </ThemeButton>
+        <RightActions>
+          <LanguageSwitcher mode={mode} />
+          <ThemeButton $mode={mode} onClick={toggleTheme} aria-label="Toggle theme">
+            {mode === 'light' ? <IoMoon /> : <IoSunny />}
+          </ThemeButton>
+        </RightActions>
       </HeaderContent>
     </HeaderWrapper>
   );

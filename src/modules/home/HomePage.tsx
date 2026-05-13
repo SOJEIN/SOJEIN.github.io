@@ -1,10 +1,15 @@
 import { motion } from 'framer-motion';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiArrowUpRight, FiGithub, FiLinkedin, FiMapPin } from 'react-icons/fi';
 import styled from 'styled-components';
 
-import { BentoCard } from '../../shared/components/BentoCard';
-import { ACTION_BUTTONS, BREAKPOINTS, PERSONAL, TECH_STACK } from './home.constants';
+import { fadeUp } from '@/shared/animations/variants';
+import { BentoCard } from '@/shared/components/BentoCard';
+import { BentoGrid } from '@/shared/components/Section';
+import { BREAKPOINTS } from '@/shared/constants/breakpoints';
+
+import { ACTION_BUTTONS, PERSONAL, TECH_STACK } from './home.constants';
 
 // ============================================
 // STYLED COMPONENTS
@@ -20,29 +25,52 @@ const Section = styled.section`
   }
 `;
 
-const BentoGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: auto;
-  gap: 1rem;
-
-  @media (max-width: ${BREAKPOINTS.tablet}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-/* ---- Bio Card ---- */
 const BioCard = styled(BentoCard)`
   grid-column: span 7;
   min-height: 280px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 
   @media (max-width: ${BREAKPOINTS.tablet}) {
     grid-column: span 1;
     min-height: auto;
   }
+`;
+
+const BioInner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  height: 100%;
+`;
+
+const BioText = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+const AvatarWrapper = styled(motion.div)`
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  padding: 2.5px;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6, #06b6d4);
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+
+  @media (max-width: ${BREAKPOINTS.tablet}) {
+    width: 70px;
+    height: 70px;
+  }
+`;
+
+const AvatarImg = styled.img`
+  width: calc(100% - 5px);
+  height: calc(100% - 5px);
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-primary);
 `;
 
 const Greeting = styled.p`
@@ -77,9 +105,7 @@ const MetaRow = styled.div`
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
 
-  svg {
-    flex-shrink: 0;
-  }
+  svg { flex-shrink: 0; }
 `;
 
 const ButtonGroup = styled.div`
@@ -117,7 +143,6 @@ const CTAButton = styled.a<{ $variant: 'primary' | 'secondary' }>`
   `}
 `;
 
-/* ---- Small stat/tech cards ---- */
 const SmallCard = styled(BentoCard)`
   grid-column: span 2;
   display: flex;
@@ -160,7 +185,6 @@ const StatLabel = styled.span`
   color: var(--text-secondary);
 `;
 
-/* ---- Location card ---- */
 const LocationCard = styled(BentoCard)`
   grid-column: span 3;
   display: flex;
@@ -186,7 +210,6 @@ const LocationValue = styled.p`
   color: var(--text-primary);
 `;
 
-/* ---- Social links card ---- */
 const SocialCard = styled(BentoCard)`
   grid-column: span 2;
   display: flex;
@@ -220,7 +243,6 @@ const SocialLink = styled.a`
   }
 `;
 
-/* ---- Tech stack row ---- */
 const TechRowCard = styled(BentoCard)`
   grid-column: span 12;
   display: flex;
@@ -247,91 +269,126 @@ const TechChip = styled(motion.span)<{ $color: string }>`
   white-space: nowrap;
 `;
 
-// ============================================
-// ANIMATION VARIANTS
-// ============================================
+const ScrollIndicatorWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+`;
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.07, duration: 0.45, ease: 'easeOut' },
-  }),
-};
+const ScrollLine = styled(motion.div)`
+  width: 1.5px;
+  background: linear-gradient(to bottom, var(--text-secondary), transparent);
+  margin: 0 auto;
+`;
+
+const ScrollDot = styled(motion.div)`
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-secondary);
+`;
+
+const ScrollLabel = styled.span`
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+`;
+
+const ScrollInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+`;
 
 // ============================================
 // COMPONENT
 // ============================================
 
 export const HomePage: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Section id="hero">
       <BentoGrid>
-        {/* Bio Card — 7 cols */}
-        <BioCard colSpan={7} accent>
-          <div>
-            <Greeting>{PERSONAL.greeting}</Greeting>
-            <Name
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
+        {/* Bio Card */}
+        <BioCard colSpan={7} variant="accent">
+          <BioInner>
+            <BioText>
+              <Greeting>{t('hero.greeting')}</Greeting>
+              <Name
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {PERSONAL.name}
+              </Name>
+              <Role>{t('hero.role')}</Role>
+              <MetaRow>
+                <FiMapPin size={14} />
+                {PERSONAL.location}
+              </MetaRow>
+              <ButtonGroup>
+                {ACTION_BUTTONS.map((btn) => (
+                  <CTAButton
+                    key={btn.href}
+                    href={btn.href}
+                    $variant={btn.variant}
+                    download={btn.download ? true : undefined}
+                  >
+                    {t(btn.labelKey)}
+                    <FiArrowUpRight size={14} />
+                  </CTAButton>
+                ))}
+              </ButtonGroup>
+            </BioText>
+
+            <AvatarWrapper
+              animate={{
+                boxShadow: [
+                  '0 0 0 0px rgba(99,102,241,0.4)',
+                  '0 0 0 10px rgba(99,102,241,0)',
+                  '0 0 0 0px rgba(99,102,241,0)',
+                ],
+              }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
             >
-              {PERSONAL.name}
-            </Name>
-            <Role>{PERSONAL.role}</Role>
-            <MetaRow>
-              <FiMapPin size={14} />
-              {PERSONAL.location}
-            </MetaRow>
-          </div>
-          <ButtonGroup>
-            {ACTION_BUTTONS.map((btn) => (
-              <CTAButton key={btn.label} href={btn.href} $variant={btn.variant}>
-                {btn.label}
-                <FiArrowUpRight size={14} />
-              </CTAButton>
-            ))}
-          </ButtonGroup>
+              <AvatarImg src={PERSONAL.avatar} alt={PERSONAL.name} loading="lazy" />
+            </AvatarWrapper>
+          </BioInner>
         </BioCard>
 
-        {/* React chip */}
         <SmallCard colSpan={2}>
           <TechEmoji>⚛</TechEmoji>
           <TechLabel>React</TechLabel>
         </SmallCard>
 
-        {/* TypeScript chip */}
         <SmallCard colSpan={3}>
           <TechEmoji style={{ fontSize: '1.2rem', fontWeight: 700, color: '#3178c6' }}>TS</TechEmoji>
           <TechLabel>TypeScript</TechLabel>
         </SmallCard>
 
-        {/* Node chip */}
         <SmallCard colSpan={2}>
           <TechEmoji>⬡</TechEmoji>
           <TechLabel>Node.js</TechLabel>
         </SmallCard>
 
-        {/* Location */}
         <LocationCard colSpan={3}>
-          <LocationLabel>Based in</LocationLabel>
+          <LocationLabel>{t('hero.basedIn')}</LocationLabel>
           <LocationValue>📍 {PERSONAL.location}</LocationValue>
         </LocationCard>
 
-        {/* Stats — experience */}
         <SmallCard colSpan={3}>
           <StatNumber>{PERSONAL.experience} yrs</StatNumber>
-          <StatLabel>experience</StatLabel>
+          <StatLabel>{t('hero.experienceLabel')}</StatLabel>
         </SmallCard>
 
-        {/* Stats — projects */}
         <SmallCard colSpan={3}>
           <StatNumber>{PERSONAL.projectCount}</StatNumber>
-          <StatLabel>projects</StatLabel>
+          <StatLabel>{t('hero.projectsLabel')}</StatLabel>
         </SmallCard>
 
-        {/* Social links */}
         <SocialCard colSpan={2}>
           <SocialLink href={PERSONAL.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <FiGithub />
@@ -341,7 +398,6 @@ export const HomePage: React.FC = () => {
           </SocialLink>
         </SocialCard>
 
-        {/* Full tech stack row */}
         <TechRowCard colSpan={12}>
           {TECH_STACK.map((tech, i) => (
             <TechChip
@@ -359,6 +415,21 @@ export const HomePage: React.FC = () => {
           ))}
         </TechRowCard>
       </BentoGrid>
+
+      <ScrollIndicatorWrapper>
+        <ScrollInner>
+          <ScrollLabel>{t('hero.scroll')}</ScrollLabel>
+          <ScrollLine
+            initial={{ height: 0 }}
+            animate={{ height: 32 }}
+            transition={{ delay: 1.2, duration: 0.6, ease: 'easeOut' }}
+          />
+          <ScrollDot
+            animate={{ y: [0, 6, 0], opacity: [1, 0.4, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </ScrollInner>
+      </ScrollIndicatorWrapper>
     </Section>
   );
 };

@@ -1,7 +1,17 @@
 .pill-nav-container {
   position: absolute;
-  top: 1em;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 99;
+}
+
+@media (max-width: 768px) {
+  .pill-nav-container {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    left: 0;
+  }
 }
 
 @media (max-width: 768px) {

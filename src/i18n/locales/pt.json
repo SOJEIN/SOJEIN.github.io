@@ -1,0 +1,166 @@
+{
+  "nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "experience": "Experiência",
+    "projects": "Projetos",
+    "contact": "Contato"
+  },
+  "hero": {
+    "greeting": "Olá, sou",
+    "role": "Desenvolvedor Full Stack",
+    "basedIn": "Baseado em",
+    "experienceLabel": "experiência",
+    "projectsLabel": "projetos",
+    "scroll": "rolar",
+    "cta": {
+      "viewProjects": "Ver Projetos",
+      "contact": "Contate-me",
+      "downloadCV": "Baixar CV"
+    }
+  },
+  "about": {
+    "tag": "Sobre mim",
+    "title": "Criando software que importa",
+    "bio": "Desenvolvedor Full Stack com mais de 6 anos de experiência construindo aplicações web escaláveis.\n    Especializado em React, TypeScript e tecnologias backend modernas.\n    Apaixonado por código limpo, ótima UX e entrega de valor real de negócio.",
+    "stats": {
+      "experienceDesc": "Anos de experiência",
+      "projectsDesc": "Projetos entregues"
+    },
+    "skills": {
+      "frontend": { "title": "Frontend" },
+      "backend": { "title": "Backend" },
+      "databases": { "title": "Bancos de dados" },
+      "devops": { "title": "DevOps & Ferramentas" }
+    },
+    "funFact": {
+      "title": "Curiosidade",
+      "text": "Baseado em Bogotá, Colômbia — um dos centros tecnológicos de crescimento mais rápido da América Latina. Adoro combinar fundamentos sólidos de engenharia com sensibilidades de design moderno para criar produtos que os usuários realmente apreciam."
+    }
+  },
+  "experience": {
+    "tag": "Carreira",
+    "title": "Histórico profissional",
+    "present": "Presente",
+    "leadBadge": "Tech Lead",
+    "currentBadge": "Atual",
+    "items": {
+      "aoa": {
+        "role": "Desenvolvedor Full Stack",
+        "period": "Dez 2025 – Presente",
+        "achievements": [
+          "Desenvolvimento de novas funcionalidades com React e JavaScript, garantindo manutenibilidade e escalabilidade.",
+          "Desenvolvimento backend com Laravel e PHP, projetando e otimizando APIs e lógica de negócio.",
+          "Suporte técnico e resolução de incidentes em produção, garantindo estabilidade operacional.",
+          "Gestão e otimização de bancos SQL e MongoDB, melhorando o desempenho das consultas.",
+          "Integração de conectores com sistemas externos (SISSA), garantindo sincronização correta de dados.",
+          "Aplicação de boas práticas sob princípios SOLID e Clean Code."
+        ]
+      },
+      "growtty": {
+        "role": "Tech Lead Frontend",
+        "period": "Jun 2025 – Out 2025",
+        "achievements": [
+          "Liderei o desenvolvimento de plataformas internas com React, TypeScript e Firebase sob SOLID e Clean Code.",
+          "Projetei componentes reutilizáveis e otimizei o desempenho da interface, melhorando velocidade e UX.",
+          "Documentei processos técnicos e fluxos de trabalho para padronizar o desenvolvimento da equipe.",
+          "Supervisionei a integração de serviços backend em NestJS, garantindo comunicação eficiente.",
+          "Coordenei e treinei novos membros da equipe, promovendo um ambiente colaborativo."
+        ]
+      },
+      "smiofi": {
+        "role": "Desenvolvedor Full Stack",
+        "period": "Nov 2024 – Jun 2025",
+        "achievements": [
+          "Desenvolvi e mantive soluções com React e Node.js para ferramentas de gestão documental.",
+          "Liderei a migração de Create React App para Vite.js, melhorando significativamente o desempenho de build.",
+          "Gerenciei infraestrutura com Apache, Docker e Linux, garantindo alta disponibilidade.",
+          "Desenvolvi aplicações React Native completas com APIs REST e Context API.",
+          "Refatorei projetos com princípios SOLID, alcançando redução de 25% nos erros do sistema.",
+          "Desenvolvi biblioteca para centralizar consultas de status judiciais, melhorando reutilização de código."
+        ]
+      },
+      "routz": {
+        "role": "Desenvolvedor Frontend",
+        "period": "Mar 2021 – Set 2024",
+        "achievements": [
+          "Desenvolvi aplicações móveis com React Native, alcançando melhoria de 20% em eficiência.",
+          "Projetei interfaces web responsivas focadas em UX/UI com CSS-in-JS.",
+          "Colaborei na integração de APIs REST com a equipe de backend.",
+          "Implementei testes unitários e de integração com Jest, garantindo estabilidade do código.",
+          "Documentei processos técnicos para facilitar a integração de novos desenvolvedores."
+        ]
+      },
+      "cosinte": {
+        "role": "Administrador de Mídia e Plataforma Digital",
+        "period": "Jan 2020 – Nov 2020",
+        "achievements": [
+          "Projetei e desenvolvi sites corporativos com WordPress, otimizando tempos de carregamento.",
+          "Implementei e personalizei lojas WooCommerce, melhorando a experiência de compra.",
+          "Desenvolvi aplicações Android adaptadas às necessidades dos clientes.",
+          "Manutenção e suporte técnico da plataforma digital da empresa."
+        ]
+      }
+    }
+  },
+  "projects": {
+    "tag": "Portfólio",
+    "title": "Projetos selecionados",
+    "featured": "Destaque",
+    "github": "GitHub",
+    "liveDemo": "Demo ao vivo",
+    "filters": {
+      "all": "Todos",
+      "fullstack": "Full Stack",
+      "frontend": "Frontend",
+      "backend": "Backend"
+    },
+    "items": {
+      "billing-system": {
+        "title": "Sistema de Faturamento",
+        "description": "Plataforma de faturamento full-stack construída com Laravel + React + TypeScript, containerizada com Docker. Gerencia faturação, clientes e relatórios em tempo real."
+      },
+      "sass-surveys": {
+        "title": "SaaS Pesquisas",
+        "description": "Plataforma de pesquisas como serviço. Frontend em React consumindo uma API REST NestJS com TypeScript. Arquitetura multi-tenant com painel de análises."
+      },
+      "music-app": {
+        "title": "MusicApp",
+        "description": "Reprodutor de música multiplataforma para desktop com Electron + React + Firebase. Sincronização em tempo real, gerenciamento de playlists e funcionalidades offline."
+      },
+      "task-management": {
+        "title": "Sistema de Gerenciamento de Tarefas",
+        "description": "Gerenciador de tarefas empresarial com frontend em React e API em .NET Core. Autenticação JWT, controle de acesso por função e notificações em tempo real."
+      }
+    }
+  },
+  "contact": {
+    "tag": "Contato",
+    "title": "Vamos trabalhar juntos",
+    "form": {
+      "name": "Nome",
+      "namePlaceholder": "Seu nome completo",
+      "email": "E-mail",
+      "emailPlaceholder": "voce@exemplo.com",
+      "subject": "Assunto",
+      "subjectPlaceholder": "Sobre o que se trata?",
+      "message": "Mensagem",
+      "messagePlaceholder": "Conte-me sobre seu projeto ou ideia...",
+      "send": "Enviar mensagem",
+      "sending": "Enviando…",
+      "success": "✓ Mensagem enviada! Responderei em breve.",
+      "error": "✗ Algo deu errado. Por favor, envie-me um e-mail diretamente."
+    },
+    "info": {
+      "emailLabel": "E-mail",
+      "locationLabel": "Localização"
+    },
+    "availability": {
+      "title": "Disponível para novos projetos",
+      "text": "Aberto a posições em tempo integral, projetos freelance e consultoria. Baseado em Bogotá — trabalho remoto em todo o mundo."
+    }
+  },
+  "footer": {
+    "role": "Desenvolvedor Full Stack"
+  }
+}

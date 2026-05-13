@@ -5,18 +5,8 @@ export interface TechIcon {
 }
 
 export interface ActionButton {
-  label: string;
+  labelKey: string;
   href: string;
   variant: 'primary' | 'secondary';
-}
-
-export interface Project {
-  id: string;
-  title: string;
-  description: string;
-  stack: string[];
-  category: 'fullstack' | 'frontend' | 'backend';
-  githubUrl: string;
-  demoUrl?: string;
-  featured?: boolean;
+  download?: boolean;
 }

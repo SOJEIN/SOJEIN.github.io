@@ -1,11 +1,16 @@
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiArrowUpRight, FiGithub, FiStar } from 'react-icons/fi';
 import styled from 'styled-components';
 
-import { BentoCard } from '../../shared/components/BentoCard';
-import { BREAKPOINTS, PROJECTS } from '../home/home.constants';
-import { Project } from '../home/home.types';
+import { fadeUp } from '@/shared/animations/variants';
+import { BentoCard } from '@/shared/components/BentoCard';
+import { BentoGrid, SectionTag, SectionTitle } from '@/shared/components/Section';
+import { BREAKPOINTS } from '@/shared/constants/breakpoints';
+
+import { CATEGORY_COLORS, PROJECTS } from './projects.constants';
+import { Project } from './projects.types';
 
 // ============================================
 // STYLED COMPONENTS
@@ -32,21 +37,6 @@ const SectionHeader = styled.div`
 
 const HeaderLeft = styled.div``;
 
-const SectionTag = styled.p`
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
-`;
-
-const SectionTitle = styled(motion.h2)`
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 700;
-  color: var(--text-primary);
-`;
-
 const FilterRow = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -59,10 +49,8 @@ const FilterBtn = styled.button<{ $active: boolean }>`
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  border: 1px solid
-    ${({ $active }) => ($active ? 'var(--accent)' : 'var(--card-border)')};
-  background: ${({ $active }) =>
-    $active ? 'var(--accent)' : 'transparent'};
+  border: 1px solid ${({ $active }) => ($active ? 'var(--accent)' : 'var(--card-border)')};
+  background: ${({ $active }) => ($active ? 'var(--accent)' : 'transparent')};
   color: ${({ $active }) => ($active ? '#fff' : 'var(--text-secondary)')};
   transition: all 0.2s ease;
 
@@ -72,12 +60,11 @@ const FilterBtn = styled.button<{ $active: boolean }>`
   }
 `;
 
-/* ---- Project card variants ---- */
 const FeaturedCard = styled(BentoCard)`
   grid-column: span 7;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
   cursor: pointer;
 
   @media (max-width: ${BREAKPOINTS.tablet}) {
@@ -97,20 +84,18 @@ const RegularCard = styled(BentoCard)`
   }
 `;
 
-const BentoGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1rem;
-
-  @media (max-width: ${BREAKPOINTS.tablet}) {
-    grid-template-columns: 1fr;
-  }
+const CardColorBar = styled.div<{ $color: string }>`
+  height: 3px;
+  width: 100%;
+  border-radius: 999px;
+  background: ${({ $color }) => $color};
+  margin-bottom: 0.25rem;
 `;
 
 const CardTopRow = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.5rem;
 `;
 
 const FeaturedBadge = styled.span`
@@ -128,21 +113,15 @@ const FeaturedBadge = styled.span`
   background: rgba(99, 102, 241, 0.08);
 `;
 
-const CategoryBadge = styled.span<{ $category: string }>`
+const CategoryBadge = styled.span<{ $bg: string; $color: string }>`
   font-size: 0.7rem;
   font-weight: 600;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: ${({ $category }) =>
-    $category === 'fullstack'
-      ? 'rgba(6, 182, 212, 0.1)'
-      : $category === 'frontend'
-        ? 'rgba(99, 102, 241, 0.1)'
-        : 'rgba(139, 92, 246, 0.1)'};
-  color: ${({ $category }) =>
-    $category === 'fullstack' ? '#06b6d4' : $category === 'frontend' ? 'var(--accent)' : '#8b5cf6'};
+  background: ${({ $bg }) => $bg};
+  color: ${({ $color }) => $color};
 `;
 
 const CardTitle = styled.h3`
@@ -178,6 +157,7 @@ const LinksRow = styled.div`
   gap: 0.75rem;
   padding-top: 0.75rem;
   border-top: 1px solid var(--card-border);
+  margin-top: auto;
 `;
 
 const CardLink = styled.a`
@@ -190,23 +170,14 @@ const CardLink = styled.a`
   text-decoration: none;
   transition: color 0.2s ease;
 
-  &:hover {
-    color: var(--accent);
-  }
+  &:hover { color: var(--accent); }
 `;
 
 // ============================================
-// ANIMATION
+// FILTERS
 // ============================================
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.08, duration: 0.45, ease: 'easeOut' },
-  }),
-};
+type Filter = 'all' | Project['category'];
 
 // ============================================
 // PROJECT CARD
@@ -218,21 +189,25 @@ interface ProjectCardProps {
   featured: boolean;
 }
 
-const ProjectCardContent: React.FC<ProjectCardProps> = ({ project, index, featured }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, featured }) => {
+  const { t } = useTranslation();
+  const colors = CATEGORY_COLORS[project.category];
+
   const content = (
     <>
+      <CardColorBar $color={colors.bar} />
       <CardTopRow>
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          {featured && (
-            <FeaturedBadge>
-              <FiStar size={10} /> Featured
-            </FeaturedBadge>
-          )}
-          <CategoryBadge $category={project.category}>{project.category}</CategoryBadge>
-        </div>
+        {featured && (
+          <FeaturedBadge>
+            <FiStar size={10} /> {t('projects.featured')}
+          </FeaturedBadge>
+        )}
+        <CategoryBadge $bg={colors.bg} $color={colors.text}>
+          {t(`projects.filters.${project.category}`)}
+        </CategoryBadge>
       </CardTopRow>
-      <CardTitle>{project.title}</CardTitle>
-      <CardDesc>{project.description}</CardDesc>
+      <CardTitle>{t(`projects.items.${project.id}.title`)}</CardTitle>
+      <CardDesc>{t(`projects.items.${project.id}.description`)}</CardDesc>
       <StackRow>
         {project.stack.map((s) => (
           <StackPill key={s}>{s}</StackPill>
@@ -240,63 +215,50 @@ const ProjectCardContent: React.FC<ProjectCardProps> = ({ project, index, featur
       </StackRow>
       <LinksRow>
         <CardLink href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-          <FiGithub size={14} /> GitHub
+          <FiGithub size={14} /> {t('projects.github')}
         </CardLink>
         {project.demoUrl && (
           <CardLink href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-            <FiArrowUpRight size={14} /> Live demo
+            <FiArrowUpRight size={14} /> {t('projects.liveDemo')}
           </CardLink>
         )}
       </LinksRow>
     </>
   );
 
+  const motionProps = {
+    custom: index,
+    initial: 'hidden' as const,
+    whileInView: 'visible' as const,
+    viewport: { once: true },
+    variants: fadeUp,
+  };
+
   return featured ? (
-    <FeaturedCard
-      colSpan={7}
-      accent
-      as={motion.div as React.ElementType}
-      custom={index}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeUp}
-    >
+    <FeaturedCard colSpan={7} variant="accent" {...motionProps}>
       {content}
     </FeaturedCard>
   ) : (
-    <RegularCard
-      colSpan={5}
-      as={motion.div as React.ElementType}
-      custom={index}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeUp}
-    >
+    <RegularCard colSpan={5} {...motionProps}>
       {content}
     </RegularCard>
   );
 };
 
 // ============================================
-// FILTERS
-// ============================================
-
-type Filter = 'all' | 'fullstack' | 'frontend' | 'backend';
-const FILTERS: { label: string; value: Filter }[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Full Stack', value: 'fullstack' },
-  { label: 'Frontend', value: 'frontend' },
-  { label: 'Backend', value: 'backend' },
-];
-
-// ============================================
 // COMPONENT
 // ============================================
 
 export const ProjectsPage: React.FC = () => {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState<Filter>('all');
+
+  const FILTERS: { labelKey: string; value: Filter }[] = [
+    { labelKey: 'projects.filters.all', value: 'all' },
+    { labelKey: 'projects.filters.fullstack', value: 'fullstack' },
+    { labelKey: 'projects.filters.frontend', value: 'frontend' },
+    { labelKey: 'projects.filters.backend', value: 'backend' },
+  ];
 
   const filtered = PROJECTS.filter((p) => filter === 'all' || p.category === filter);
 
@@ -304,20 +266,20 @@ export const ProjectsPage: React.FC = () => {
     <Section id="projects">
       <SectionHeader>
         <HeaderLeft>
-          <SectionTag>Portfolio</SectionTag>
+          <SectionTag>{t('projects.tag')}</SectionTag>
           <SectionTitle
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45 }}
           >
-            Selected projects
+            {t('projects.title')}
           </SectionTitle>
         </HeaderLeft>
         <FilterRow>
           {FILTERS.map((f) => (
             <FilterBtn key={f.value} $active={filter === f.value} onClick={() => setFilter(f.value)}>
-              {f.label}
+              {t(f.labelKey)}
             </FilterBtn>
           ))}
         </FilterRow>
@@ -325,7 +287,7 @@ export const ProjectsPage: React.FC = () => {
 
       <BentoGrid>
         {filtered.map((project, i) => (
-          <ProjectCardContent
+          <ProjectCard
             key={project.id}
             project={project}
             index={i}

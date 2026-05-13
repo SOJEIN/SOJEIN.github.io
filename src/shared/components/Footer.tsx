@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 import styled from 'styled-components';
 
@@ -50,10 +51,12 @@ const SocialLink = styled.a`
 `;
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <FooterWrapper>
       <Inner>
-        <Copy>© {new Date().getFullYear()} {PERSONAL.name} · Full Stack Developer</Copy>
+        <Copy>© {new Date().getFullYear()} {PERSONAL.name} · {t('footer.role')}</Copy>
         <SocialRow>
           <SocialLink href={PERSONAL.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <FiGithub />

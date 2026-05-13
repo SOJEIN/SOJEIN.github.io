@@ -1,22 +1,31 @@
-import { motion } from 'framer-motion';
+import { HTMLMotionProps, motion } from 'framer-motion';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-interface BentoCardProps {
-  children: React.ReactNode;
-  colSpan?: number;
-  rowSpan?: number;
-  className?: string;
-  onClick?: () => void;
-  accent?: boolean;
-}
+export type CardVariant = 'default' | 'accent' | 'glass';
+
+const variantStyles: Record<CardVariant, ReturnType<typeof css>> = {
+  default: css`
+    background: var(--card-bg);
+    border-color: var(--card-border);
+  `,
+  accent: css`
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
+    border-color: rgba(99, 102, 241, 0.2);
+  `,
+  glass: css`
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-color: rgba(255, 255, 255, 0.1);
+  `,
+};
 
 const CardWrapper = styled(motion.div)<{
   $colSpan?: number;
   $rowSpan?: number;
-  $accent?: boolean;
+  $variant: CardVariant;
 }>`
-  background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-card);
   box-shadow: var(--card-shadow);
@@ -32,13 +41,7 @@ const CardWrapper = styled(motion.div)<{
 
   ${({ $colSpan }) => $colSpan && `grid-column: span ${$colSpan};`}
   ${({ $rowSpan }) => $rowSpan && `grid-row: span ${$rowSpan};`}
-
-  ${({ $accent }) =>
-    $accent &&
-    `
-    background: linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(139,92,246,0.08) 100%);
-    border-color: rgba(99, 102, 241, 0.2);
-  `}
+  ${({ $variant }) => variantStyles[$variant]}
 
   @media (max-width: 768px) {
     grid-column: span 1 !important;
@@ -46,19 +49,32 @@ const CardWrapper = styled(motion.div)<{
   }
 `;
 
+export type BentoCardProps = HTMLMotionProps<'div'> & {
+  children: React.ReactNode;
+  colSpan?: number;
+  rowSpan?: number;
+  variant?: CardVariant;
+  /** @deprecated use variant="accent" */
+  accent?: boolean;
+};
+
 export const BentoCard: React.FC<BentoCardProps> = ({
   children,
   colSpan,
   rowSpan,
+  variant,
+  accent,
   className,
   onClick,
-  accent,
+  ...motionProps
 }) => {
+  const resolvedVariant: CardVariant = variant ?? (accent ? 'accent' : 'default');
+
   return (
     <CardWrapper
       $colSpan={colSpan}
       $rowSpan={rowSpan}
-      $accent={accent}
+      $variant={resolvedVariant}
       className={className}
       onClick={onClick}
       whileHover={{
@@ -67,6 +83,7 @@ export const BentoCard: React.FC<BentoCardProps> = ({
         boxShadow: '0 8px 32px rgba(99, 102, 241, 0.12)',
       }}
       transition={{ duration: 0.2 }}
+      {...motionProps}
     >
       {children}
     </CardWrapper>

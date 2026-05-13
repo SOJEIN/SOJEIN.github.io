@@ -1,10 +1,15 @@
 import { motion } from 'framer-motion';
 import React from 'react';
-import { FiCode, FiLayers, FiServer, FiTool } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { BentoCard } from '../../shared/components/BentoCard';
-import { BREAKPOINTS, PERSONAL } from '../home/home.constants';
+import { fadeUp } from '@/shared/animations/variants';
+import { BentoCard } from '@/shared/components/BentoCard';
+import { BentoGrid, SectionTag, SectionTitle } from '@/shared/components/Section';
+import { BREAKPOINTS } from '@/shared/constants/breakpoints';
+
+import { PERSONAL } from '../home/home.constants';
+import { SKILLS } from './about.constants';
 
 // ============================================
 // STYLED COMPONENTS
@@ -24,31 +29,6 @@ const SectionHeader = styled.div`
   margin-bottom: 2rem;
 `;
 
-const SectionTag = styled.p`
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
-`;
-
-const SectionTitle = styled(motion.h2)`
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 700;
-  color: var(--text-primary);
-`;
-
-const BentoGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1rem;
-
-  @media (max-width: ${BREAKPOINTS.tablet}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
 const BioMainCard = styled(BentoCard)`
   grid-column: span 7;
 
@@ -65,18 +45,7 @@ const BioText = styled.p`
 `;
 
 const SkillCard = styled(BentoCard)`
-  grid-column: span 5;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-
-  @media (max-width: ${BREAKPOINTS.tablet}) {
-    grid-column: span 1;
-  }
-`;
-
-const SkillCardSmall = styled(BentoCard)`
-  grid-column: span 4;
+  grid-column: span 6;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -130,7 +99,7 @@ const SkillPill = styled.li`
 `;
 
 const StatCard = styled(BentoCard)`
-  grid-column: span 5;
+  grid-column: span 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -159,7 +128,7 @@ const StatDesc = styled.span`
 `;
 
 const FunCard = styled(BentoCard)`
-  grid-column: span 7;
+  grid-column: span 8;
 
   @media (max-width: ${BREAKPOINTS.tablet}) {
     grid-column: span 1;
@@ -182,117 +151,74 @@ const FunText = styled.p`
 `;
 
 // ============================================
-// DATA
-// ============================================
-
-const SKILLS = [
-  {
-    icon: <FiCode />,
-    title: 'Frontend',
-    items: ['React', 'TypeScript', 'Next.js', 'Styled-Components', 'Framer Motion', 'Vite'],
-  },
-  {
-    icon: <FiServer />,
-    title: 'Backend',
-    items: ['Node.js', 'NestJS', 'Laravel', '.NET Core', 'REST APIs', 'JWT'],
-  },
-  {
-    icon: <FiLayers />,
-    title: 'Databases',
-    items: ['PostgreSQL', 'MySQL', 'SQL Server', 'Firebase', 'MongoDB'],
-  },
-  {
-    icon: <FiTool />,
-    title: 'DevOps & Tools',
-    items: ['Docker', 'Git', 'GitHub Actions', 'Linux', 'Agile / Scrum'],
-  },
-];
-
-const STATS = [
-  { num: '6+', desc: 'Years of experience' },
-  { num: '25+', desc: 'Projects delivered' },
-];
-
-// ============================================
-// ANIMATION
-// ============================================
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.08, duration: 0.45, ease: 'easeOut' },
-  }),
-};
-
-// ============================================
 // COMPONENT
 // ============================================
 
 export const About: React.FC = () => {
+  const { t } = useTranslation();
+
+  const STATS = [
+    { num: `${PERSONAL.experience}+`, desc: t('about.stats.experienceDesc') },
+    { num: PERSONAL.projectCount, desc: t('about.stats.projectsDesc') },
+  ];
+
   return (
     <Section id="about">
       <SectionHeader>
-        <SectionTag>About me</SectionTag>
+        <SectionTag>{t('about.tag')}</SectionTag>
         <SectionTitle
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45 }}
         >
-          Crafting software that matters
+          {t('about.title')}
         </SectionTitle>
       </SectionHeader>
 
       <BentoGrid>
         {/* Bio */}
-        <BioMainCard colSpan={7} accent>
-          <BioText>{PERSONAL.bio}</BioText>
+        <BioMainCard colSpan={7} variant="accent">
+          <BioText>{t('about.bio')}</BioText>
         </BioMainCard>
 
         {/* Stats */}
-        {STATS.map((s, i) => (
-          <StatCard key={s.num} colSpan={i === 0 ? 3 : 2}>
+        {STATS.map((s) => (
+          <StatCard key={s.num} colSpan={2}>
             <StatNum>{s.num}</StatNum>
             <StatDesc>{s.desc}</StatDesc>
           </StatCard>
         ))}
 
         {/* Skill cards */}
-        {SKILLS.map((skill, i) => {
-          const Card = i < 2 ? SkillCard : SkillCardSmall;
-          return (
-            <Card key={skill.title} colSpan={i < 2 ? 5 : 4}>
-              <motion.div
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-              >
-                <SkillCardHeader>
-                  <SkillIcon>{skill.icon}</SkillIcon>
-                  <SkillTitle>{skill.title}</SkillTitle>
-                </SkillCardHeader>
-              </motion.div>
-              <SkillList>
-                {skill.items.map((item) => (
-                  <SkillPill key={item}>{item}</SkillPill>
-                ))}
-              </SkillList>
-            </Card>
-          );
-        })}
+        {SKILLS.map((skill, i) => (
+          <SkillCard key={skill.titleKey} colSpan={6}>
+            <motion.div
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <SkillCardHeader>
+                <SkillIcon>
+                  <skill.icon />
+                </SkillIcon>
+                <SkillTitle>{t(skill.titleKey)}</SkillTitle>
+              </SkillCardHeader>
+            </motion.div>
+            <SkillList>
+              {skill.items.map((item) => (
+                <SkillPill key={item}>{item}</SkillPill>
+              ))}
+            </SkillList>
+          </SkillCard>
+        ))}
 
         {/* Fun fact */}
-        <FunCard colSpan={7}>
-          <FunTitle>Fun fact</FunTitle>
-          <FunText>
-            Based in Bogotá, Colombia — one of Latin America&apos;s fastest-growing tech hubs.
-            I love combining solid engineering fundamentals with modern design sensibilities
-            to build products that users actually enjoy.
-          </FunText>
+        <FunCard colSpan={8}>
+          <FunTitle>{t('about.funFact.title')}</FunTitle>
+          <FunText>{t('about.funFact.text')}</FunText>
         </FunCard>
       </BentoGrid>
     </Section>

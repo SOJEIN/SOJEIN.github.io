@@ -1,0 +1,166 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "role": "Full Stack Developer",
+    "basedIn": "Based in",
+    "experienceLabel": "experience",
+    "projectsLabel": "projects",
+    "scroll": "scroll",
+    "cta": {
+      "viewProjects": "View Projects",
+      "contact": "Contact me",
+      "downloadCV": "Download CV"
+    }
+  },
+  "about": {
+    "tag": "About me",
+    "title": "Crafting software that matters",
+    "bio": "Full Stack Developer with 6+ years of experience building scalable web applications.\n    I specialize in React, TypeScript, and modern backend technologies.\n    Passionate about clean code, great UX, and delivering real business value.",
+    "stats": {
+      "experienceDesc": "Years of experience",
+      "projectsDesc": "Projects delivered"
+    },
+    "skills": {
+      "frontend": { "title": "Frontend" },
+      "backend": { "title": "Backend" },
+      "databases": { "title": "Databases" },
+      "devops": { "title": "DevOps & Tools" }
+    },
+    "funFact": {
+      "title": "Fun fact",
+      "text": "Based in Bogotá, Colombia — one of Latin America's fastest-growing tech hubs. I love combining solid engineering fundamentals with modern design sensibilities to build products that users actually enjoy."
+    }
+  },
+  "experience": {
+    "tag": "Career",
+    "title": "Work history",
+    "present": "Present",
+    "leadBadge": "Tech Lead",
+    "currentBadge": "Current",
+    "items": {
+      "aoa": {
+        "role": "Full Stack Developer",
+        "period": "Dec 2025 – Present",
+        "achievements": [
+          "Developed new features using React and JavaScript, ensuring maintainability and scalability.",
+          "Backend development with Laravel and PHP, designing and optimizing APIs and business logic.",
+          "Technical support and production incident resolution, ensuring stability and operational continuity.",
+          "Management and optimization of SQL and MongoDB databases, improving query performance.",
+          "Integration of connectors with external systems (SISSA), ensuring correct data synchronization.",
+          "Applied SOLID and Clean Code principles across all development work."
+        ]
+      },
+      "growtty": {
+        "role": "Tech Lead Frontend",
+        "period": "Jun 2025 – Oct 2025",
+        "achievements": [
+          "Led development of internal platforms with React, TypeScript and Firebase under SOLID and Clean Code.",
+          "Designed reusable components and optimized interface performance, improving load speed and UX.",
+          "Documented technical processes and workflows to standardize development practices.",
+          "Supervised NestJS backend service integration, ensuring efficient frontend-backend communication.",
+          "Mentored and onboarded new team members, fostering a collaborative development environment."
+        ]
+      },
+      "smiofi": {
+        "role": "Full Stack Developer",
+        "period": "Nov 2024 – Jun 2025",
+        "achievements": [
+          "Developed and maintained React and Node.js solutions for document management tools.",
+          "Led migration from Create React App (CRA) to Vite.js, significantly improving build performance.",
+          "Managed infrastructure with Apache Web Server, Docker and Linux, ensuring high availability.",
+          "Built complete React Native mobile applications integrating REST APIs and Context API.",
+          "Led refactoring efforts aligned with SOLID principles, achieving a 25% reduction in system errors.",
+          "Developed a library to centralize judicial status queries, improving code reuse."
+        ]
+      },
+      "routz": {
+        "role": "Frontend Developer",
+        "period": "Mar 2021 – Sep 2024",
+        "achievements": [
+          "Built mobile applications with React Native, achieving a 20% efficiency improvement through optimized components.",
+          "Designed responsive web interfaces focused on UX/UI using CSS-in-JS.",
+          "Collaborated on REST API integration with the backend team.",
+          "Implemented unit and integration tests with Jest, ensuring code stability before each deployment.",
+          "Documented technical processes and configurations to ease onboarding of new developers."
+        ]
+      },
+      "cosinte": {
+        "role": "Digital Media & Platform Administrator",
+        "period": "Jan 2020 – Nov 2020",
+        "achievements": [
+          "Designed and developed corporate websites with WordPress, optimizing load times and usability.",
+          "Implemented and customized WooCommerce online stores, improving purchase experience.",
+          "Developed Android mobile applications tailored to specific client needs.",
+          "Provided maintenance and technical support for the company's digital platform."
+        ]
+      }
+    }
+  },
+  "projects": {
+    "tag": "Portfolio",
+    "title": "Selected projects",
+    "featured": "Featured",
+    "github": "GitHub",
+    "liveDemo": "Live demo",
+    "filters": {
+      "all": "All",
+      "fullstack": "Full Stack",
+      "frontend": "Frontend",
+      "backend": "Backend"
+    },
+    "items": {
+      "billing-system": {
+        "title": "Billing System",
+        "description": "Full-stack billing platform built with Laravel + React + TypeScript, containerized with Docker. Handles invoicing, client management, and real-time reporting."
+      },
+      "sass-surveys": {
+        "title": "SaaS Surveys",
+        "description": "Survey platform as a service. React frontend consuming a NestJS REST API with TypeScript. Multi-tenant architecture with analytics dashboard."
+      },
+      "music-app": {
+        "title": "MusicApp",
+        "description": "Cross-platform desktop music player built with Electron + React + Firebase. Real-time sync, playlist management, and offline capabilities."
+      },
+      "task-management": {
+        "title": "Task Management System",
+        "description": "Enterprise task manager with React frontend and .NET Core API. JWT authentication, role-based access control, and real-time notifications."
+      }
+    }
+  },
+  "contact": {
+    "tag": "Contact",
+    "title": "Let's work together",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "What's this about?",
+      "message": "Message",
+      "messagePlaceholder": "Tell me about your project or idea...",
+      "send": "Send message",
+      "sending": "Sending…",
+      "success": "✓ Message sent! I'll get back to you soon.",
+      "error": "✗ Something went wrong. Please try emailing me directly."
+    },
+    "info": {
+      "emailLabel": "Email",
+      "locationLabel": "Location"
+    },
+    "availability": {
+      "title": "Available for new projects",
+      "text": "Open to full-time positions, freelance projects, and consulting. Based in Bogotá — remote-friendly worldwide."
+    }
+  },
+  "footer": {
+    "role": "Full Stack Developer"
+  }
+}

@@ -1,18 +1,15 @@
-import emailjs from '@emailjs/browser';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiSend } from 'react-icons/fi';
 import styled from 'styled-components';
 
-import { BentoCard } from '../../shared/components/BentoCard';
-import { BREAKPOINTS, PERSONAL } from '../home/home.constants';
+import { BentoCard } from '@/shared/components/BentoCard';
+import { BentoGrid, SectionTag, SectionTitle } from '@/shared/components/Section';
+import { BREAKPOINTS } from '@/shared/constants/breakpoints';
 
-// ============================================
-// EmailJS config — replace with your real keys
-// ============================================
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+import { PERSONAL } from '../home/home.constants';
+import { emailService } from './contact.service';
 
 // ============================================
 // STYLED COMPONENTS
@@ -28,33 +25,6 @@ const Section = styled.section`
   }
 `;
 
-const SectionTag = styled.p`
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
-`;
-
-const SectionTitle = styled(motion.h2)`
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 2rem;
-`;
-
-const BentoGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1rem;
-
-  @media (max-width: ${BREAKPOINTS.tablet}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-/* ---- Form card ---- */
 const FormCard = styled(BentoCard)`
   grid-column: span 7;
 
@@ -106,10 +76,7 @@ const inputStyles = `
   }
 `;
 
-const Input = styled.input`
-  ${inputStyles}
-`;
-
+const Input = styled.input`${inputStyles}`;
 const TextArea = styled.textarea`
   ${inputStyles}
   min-height: 130px;
@@ -147,14 +114,10 @@ const FeedbackMsg = styled(motion.p)<{ $success: boolean }>`
   padding: 0.75rem 1rem;
   border-radius: 0.625rem;
   color: ${({ $success }) => ($success ? '#22c55e' : '#ef4444')};
-  background: ${({ $success }) =>
-    $success ? 'rgba(34, 197, 94, 0.08)' : 'rgba(239, 68, 68, 0.08)'};
-  border: 1px solid
-    ${({ $success }) =>
-      $success ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)'};
+  background: ${({ $success }) => ($success ? 'rgba(34, 197, 94, 0.08)' : 'rgba(239, 68, 68, 0.08)')};
+  border: 1px solid ${({ $success }) => ($success ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)')};
 `;
 
-/* ---- Info cards ---- */
 const InfoCard = styled(BentoCard)`
   grid-column: span 5;
   display: flex;
@@ -206,9 +169,7 @@ const InfoValue = styled.a`
   text-decoration: none;
   transition: color 0.2s ease;
 
-  &:hover {
-    color: var(--accent);
-  }
+  &:hover { color: var(--accent); }
 `;
 
 const SocialRow = styled.div`
@@ -247,7 +208,7 @@ const AvailabilityCard = styled(BentoCard)`
   }
 `;
 
-const AvailDot = styled.span`
+const AvailDot = styled(motion.span)`
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -279,6 +240,7 @@ type FormState = { name: string; email: string; subject: string; message: string
 const INITIAL: FormState = { name: '', email: '', subject: '', message: '' };
 
 export const Contact: React.FC = () => {
+  const { t } = useTranslation();
   const formRef = useRef<HTMLFormElement>(null);
   const [form, setForm] = useState<FormState>(INITIAL);
   const [loading, setLoading] = useState(false);
@@ -290,17 +252,16 @@ export const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formRef.current) return;
     setLoading(true);
     setFeedback(null);
 
     try {
-      await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formRef.current!, {
-        publicKey: EMAILJS_PUBLIC_KEY,
-      });
-      setFeedback({ msg: '✓ Message sent! I\'ll get back to you soon.', success: true });
+      await emailService.send(formRef.current);
+      setFeedback({ msg: t('contact.form.success'), success: true });
       setForm(INITIAL);
     } catch {
-      setFeedback({ msg: '✗ Something went wrong. Please try emailing me directly.', success: false });
+      setFeedback({ msg: t('contact.form.error'), success: false });
     } finally {
       setLoading(false);
     }
@@ -308,74 +269,59 @@ export const Contact: React.FC = () => {
 
   return (
     <Section id="contact">
-      <SectionTag>Contact</SectionTag>
+      <SectionTag>{t('contact.tag')}</SectionTag>
       <SectionTitle
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.45 }}
+        style={{ marginBottom: '2rem' }}
       >
-        Let&apos;s work together
+        {t('contact.title')}
       </SectionTitle>
 
       <BentoGrid>
-        {/* Form */}
-        <FormCard colSpan={7} accent>
+        <FormCard colSpan={7} variant="accent">
           <Form ref={formRef} onSubmit={handleSubmit}>
             <FormGroup>
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">{t('contact.form.name')}</Label>
               <Input
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Your full name"
-                value={form.name}
-                onChange={handleChange}
-                required
+                id="name" name="name" type="text"
+                placeholder={t('contact.form.namePlaceholder')}
+                value={form.name} onChange={handleChange} required
               />
             </FormGroup>
 
             <FormGroup>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('contact.form.email')}</Label>
               <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="you@example.com"
-                value={form.email}
-                onChange={handleChange}
-                required
+                id="email" name="email" type="email"
+                placeholder={t('contact.form.emailPlaceholder')}
+                value={form.email} onChange={handleChange} required
               />
             </FormGroup>
 
             <FormGroup>
-              <Label htmlFor="subject">Subject</Label>
+              <Label htmlFor="subject">{t('contact.form.subject')}</Label>
               <Input
-                id="subject"
-                name="subject"
-                type="text"
-                placeholder="What's this about?"
-                value={form.subject}
-                onChange={handleChange}
-                required
+                id="subject" name="subject" type="text"
+                placeholder={t('contact.form.subjectPlaceholder')}
+                value={form.subject} onChange={handleChange} required
               />
             </FormGroup>
 
             <FormGroup>
-              <Label htmlFor="message">Message</Label>
+              <Label htmlFor="message">{t('contact.form.message')}</Label>
               <TextArea
-                id="message"
-                name="message"
-                placeholder="Tell me about your project or idea..."
-                value={form.message}
-                onChange={handleChange}
-                required
+                id="message" name="message"
+                placeholder={t('contact.form.messagePlaceholder')}
+                value={form.message} onChange={handleChange} required
               />
             </FormGroup>
 
             <SubmitBtn type="submit" disabled={loading} $loading={loading}>
               <FiSend size={15} />
-              {loading ? 'Sending…' : 'Send message'}
+              {loading ? t('contact.form.sending') : t('contact.form.send')}
             </SubmitBtn>
 
             <AnimatePresence>
@@ -393,13 +339,12 @@ export const Contact: React.FC = () => {
           </Form>
         </FormCard>
 
-        {/* Contact info */}
         <InfoCard colSpan={5}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <InfoRow>
               <InfoIcon><FiMail /></InfoIcon>
               <InfoText>
-                <InfoLabel>Email</InfoLabel>
+                <InfoLabel>{t('contact.info.emailLabel')}</InfoLabel>
                 <InfoValue href={`mailto:${PERSONAL.email}`}>{PERSONAL.email}</InfoValue>
               </InfoText>
             </InfoRow>
@@ -407,7 +352,7 @@ export const Contact: React.FC = () => {
             <InfoRow>
               <InfoIcon><FiMapPin /></InfoIcon>
               <InfoText>
-                <InfoLabel>Location</InfoLabel>
+                <InfoLabel>{t('contact.info.locationLabel')}</InfoLabel>
                 <InfoValue as="span">{PERSONAL.location}</InfoValue>
               </InfoText>
             </InfoRow>
@@ -423,16 +368,21 @@ export const Contact: React.FC = () => {
           </SocialRow>
         </InfoCard>
 
-        {/* Availability */}
         <AvailabilityCard colSpan={5}>
           <AvailTitle>
-            <AvailDot />
-            Available for new projects
+            <AvailDot
+              animate={{
+                boxShadow: [
+                  '0 0 0 0px rgba(34,197,94,0.4)',
+                  '0 0 0 8px rgba(34,197,94,0)',
+                  '0 0 0 0px rgba(34,197,94,0)',
+                ],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            {t('contact.availability.title')}
           </AvailTitle>
-          <AvailText>
-            Open to full-time positions, freelance projects, and consulting.
-            Based in Bogotá — remote-friendly worldwide.
-          </AvailText>
+          <AvailText>{t('contact.availability.text')}</AvailText>
         </AvailabilityCard>
       </BentoGrid>
     </Section>

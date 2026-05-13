@@ -1,11 +1,12 @@
 export interface HeaderLink {
-  name: string;
+  nameKey: string;
   path: string;
 }
 
 export const headerLinks: HeaderLink[] = [
-  { name: 'Home', path: '#hero' },
-  { name: 'About', path: '#about' },
-  { name: 'Projects', path: '#projects' },
-  { name: 'Contact', path: '#contact' },
+  { nameKey: 'nav.home', path: '#hero' },
+  { nameKey: 'nav.about', path: '#about' },
+  { nameKey: 'nav.experience', path: '#experience' },
+  { nameKey: 'nav.projects', path: '#projects' },
+  { nameKey: 'nav.contact', path: '#contact' },
 ];
