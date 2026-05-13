@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { BackToTop } from '../BackToTop';
 import Footer from '../Footer';
 import Header from './Header';
 
@@ -15,6 +16,7 @@ export default function Layout({ mode, toggleTheme, children }: LayoutProps) {
       <Header mode={mode} toggleTheme={toggleTheme} />
       <main className="main-content">{children}</main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { fadeUp } from '@/shared/animations/variants';
 import { BentoCard } from '@/shared/components/BentoCard';
 import { BentoGrid } from '@/shared/components/Section';
+import { Typewriter } from '@/shared/components/Typewriter';
 import { BREAKPOINTS } from '@/shared/constants/breakpoints';
 
 import { ACTION_BUTTONS, PERSONAL, TECH_STACK } from './home.constants';
@@ -324,7 +325,9 @@ export const HomePage: React.FC = () => {
               >
                 {PERSONAL.name}
               </Name>
-              <Role>{t('hero.role')}</Role>
+              <Role>
+                <Typewriter words={t('hero.roles', { returnObjects: true }) as string[]} />
+              </Role>
               <MetaRow>
                 <FiMapPin size={14} />
                 {PERSONAL.location}

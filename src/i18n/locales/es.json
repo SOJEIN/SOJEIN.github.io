@@ -9,6 +9,7 @@
   "hero": {
     "greeting": "Hola, soy",
     "role": "Desarrollador Full Stack",
+    "roles": ["Desarrollador Full Stack", "Desarrollador React", "Dev React Native", "Ingeniero Node.js"],
     "basedIn": "Ubicado en",
     "experienceLabel": "experiencia",
     "projectsLabel": "proyectos",

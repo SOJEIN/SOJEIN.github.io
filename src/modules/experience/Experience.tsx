@@ -76,7 +76,7 @@ const DotWrapper = styled.div`
   padding-top: 2px;
 `;
 
-const Dot = styled.div<{ $current?: boolean }>`
+const Dot = styled(motion.div)<{ $current?: boolean }>`
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -85,7 +85,6 @@ const Dot = styled.div<{ $current?: boolean }>`
   position: relative;
   z-index: 1;
   flex-shrink: 0;
-  transition: all 0.3s ease;
 
   ${({ $current }) =>
     $current &&
@@ -250,11 +249,21 @@ export const Experience: React.FC = () => {
               custom={i}
               initial="hidden"
               whileInView="visible"
+              whileHover="hover"
               viewport={{ once: true, margin: '-60px' }}
               variants={fadeUp}
             >
               <DotWrapper>
-                <Dot $current={exp.current} />
+                <Dot
+                  $current={exp.current}
+                  variants={{
+                    hover: {
+                      scale: 1.35,
+                      boxShadow: '0 0 0 8px rgba(99, 102, 241, 0.18)',
+                      transition: { duration: 0.2 },
+                    },
+                  }}
+                />
               </DotWrapper>
 
               <Card>

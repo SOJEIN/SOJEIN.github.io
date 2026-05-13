@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import logo from '@/assets/Logo_menu.svg';
 import PillNav from '@/components/pillaNav/PillaNav';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
+import { ScrollProgressBar } from '@/shared/components/ScrollProgressBar';
 
 import { headerLinks } from './HeaderLinks';
 
@@ -89,6 +90,7 @@ const Header: React.FC<HeaderProps> = ({ mode, toggleTheme }) => {
 
   return (
     <HeaderWrapper $mode={mode}>
+      <ScrollProgressBar />
       <HeaderContent>
         <PillNav
           items={items}

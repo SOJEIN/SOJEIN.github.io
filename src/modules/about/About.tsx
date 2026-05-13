@@ -7,6 +7,7 @@ import { fadeUp } from '@/shared/animations/variants';
 import { BentoCard } from '@/shared/components/BentoCard';
 import { BentoGrid, SectionTag, SectionTitle } from '@/shared/components/Section';
 import { BREAKPOINTS } from '@/shared/constants/breakpoints';
+import { useCountUp } from '@/shared/hooks/useCountUp';
 
 import { PERSONAL } from '../home/home.constants';
 import { SKILLS } from './about.constants';
@@ -80,7 +81,7 @@ const SkillTitle = styled.h3`
   color: var(--text-primary);
 `;
 
-const SkillList = styled.ul`
+const SkillList = styled(motion.ul)`
   list-style: none;
   padding: 0;
   margin: 0;
@@ -89,7 +90,7 @@ const SkillList = styled.ul`
   gap: 0.4rem;
 `;
 
-const SkillPill = styled.li`
+const SkillPill = styled(motion.li)`
   padding: 0.2rem 0.65rem;
   border-radius: 999px;
   font-size: 0.775rem;
@@ -154,13 +155,31 @@ const FunText = styled.p`
 // COMPONENT
 // ============================================
 
+const pillVariants = {
+  hidden: { opacity: 0, scale: 0.75 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.25 } },
+};
+
+const pillContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.045, delayChildren: 0.1 } },
+};
+
+interface AnimatedStatProps { target: number; suffix: string; desc: string; }
+const AnimatedStat: React.FC<AnimatedStatProps> = ({ target, suffix, desc }) => {
+  const { value, ref } = useCountUp(target);
+  return (
+    <StatCard colSpan={2}>
+      <div ref={ref}>
+        <StatNum>{value}{suffix}</StatNum>
+        <StatDesc>{desc}</StatDesc>
+      </div>
+    </StatCard>
+  );
+};
+
 export const About: React.FC = () => {
   const { t } = useTranslation();
-
-  const STATS = [
-    { num: `${PERSONAL.experience}+`, desc: t('about.stats.experienceDesc') },
-    { num: PERSONAL.projectCount, desc: t('about.stats.projectsDesc') },
-  ];
 
   return (
     <Section id="about">
@@ -183,12 +202,8 @@ export const About: React.FC = () => {
         </BioMainCard>
 
         {/* Stats */}
-        {STATS.map((s) => (
-          <StatCard key={s.num} colSpan={2}>
-            <StatNum>{s.num}</StatNum>
-            <StatDesc>{s.desc}</StatDesc>
-          </StatCard>
-        ))}
+        <AnimatedStat target={Number(PERSONAL.experience)} suffix="+" desc={t('about.stats.experienceDesc')} />
+        <AnimatedStat target={25} suffix="+" desc={t('about.stats.projectsDesc')} />
 
         {/* Skill cards */}
         {SKILLS.map((skill, i) => (
@@ -207,9 +222,14 @@ export const About: React.FC = () => {
                 <SkillTitle>{t(skill.titleKey)}</SkillTitle>
               </SkillCardHeader>
             </motion.div>
-            <SkillList>
+            <SkillList
+              variants={pillContainerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               {skill.items.map((item) => (
-                <SkillPill key={item}>{item}</SkillPill>
+                <SkillPill key={item} variants={pillVariants}>{item}</SkillPill>
               ))}
             </SkillList>
           </SkillCard>
