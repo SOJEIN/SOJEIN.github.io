@@ -11,8 +11,8 @@ export const PERSONAL = {
   location: 'Bogotá, Colombia',
   experience: '6',
   projectCount: '25+',
-  email: 'YOUR_EMAIL',
-  linkedinUrl: 'YOUR_LINKEDIN_URL',
+  email: 'jeisson.ochoa21@gmail.com',
+  linkedinUrl: 'https://www.linkedin.com/in/jeissonochoa',
   githubUrl: 'https://github.com/SOJEIN',
   avatar: 'https://avatars.githubusercontent.com/SOJEIN?v=4',
 } as const;
@@ -41,5 +41,5 @@ export const TECH_STACK: TechIcon[] = [
 export const ACTION_BUTTONS: ActionButton[] = [
   { labelKey: 'hero.cta.viewProjects', href: '#projects', variant: 'primary' },
   { labelKey: 'hero.cta.contact', href: '#contact', variant: 'secondary' },
-  { labelKey: 'hero.cta.downloadCV', href: '/cv.pdf', variant: 'secondary', download: true },
+  { labelKey: 'hero.cta.downloadCV', href: '/CV_Jeisson_Ochoa.pdf', variant: 'secondary', download: true },
 ];
