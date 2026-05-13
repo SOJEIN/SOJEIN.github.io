@@ -7,6 +7,7 @@ import logo from '@/assets/Logo_menu.svg';
 import PillNav from '@/components/pillaNav/PillaNav';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ScrollProgressBar } from '@/shared/components/ScrollProgressBar';
+import { useActiveSection } from '@/shared/hooks/useActiveSection';
 
 import { headerLinks } from './HeaderLinks';
 
@@ -87,6 +88,7 @@ const ThemeButton = styled.button<{ $mode: 'light' | 'dark' }>`
 const Header: React.FC<HeaderProps> = ({ mode, toggleTheme }) => {
   const { t } = useTranslation();
   const items = headerLinks.map((l) => ({ label: t(l.nameKey), href: l.path }));
+  const activeHref = useActiveSection(headerLinks.map((l) => l.path));
 
   return (
     <HeaderWrapper $mode={mode}>
@@ -94,6 +96,7 @@ const Header: React.FC<HeaderProps> = ({ mode, toggleTheme }) => {
       <HeaderContent>
         <PillNav
           items={items}
+          activeHref={activeHref}
           baseColor={mode === 'light' ? '#000000' : '#ffffff'}
           pillColor={mode === 'light' ? '#ffffff' : '#000000'}
           pillTextColor={mode === 'light' ? '#000000' : '#ffffff'}
