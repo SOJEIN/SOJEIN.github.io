@@ -3,6 +3,7 @@
     "home": "Home",
     "about": "About",
     "experience": "Experience",
+    "education": "Education",
     "projects": "Projects",
     "contact": "Contact"
   },
@@ -48,7 +49,7 @@
     "items": {
       "aoa": {
         "role": "Full Stack Developer",
-        "period": "Dec 2025 – Present",
+        "period": "Dec 2025 – Mar 2026",
         "achievements": [
           "Developed new features using React and JavaScript, ensuring maintainability and scalability.",
           "Backend development with Laravel and PHP, designing and optimizing APIs and business logic.",
@@ -147,6 +148,26 @@
       "fotostory": {
         "title": "FotoStory",
         "description": "Social photo-sharing platform with Google authentication, interactive gallery, likes, and real-time comments. Built with React + Vite and Firebase."
+      }
+    }
+  },
+  "education": {
+    "tag": "Education",
+    "title": "Academic background",
+    "inProgress": "In progress",
+    "completed": "Completed",
+    "items": {
+      "cun": {
+        "degree": "Systems Engineering",
+        "period": "2022 – Present",
+        "description": "Bachelor's degree in Systems Engineering at Corporación Unificada Nacional de Educación Superior. Focused on software development, algorithms, databases, and software architecture.",
+        "tags": ["Software Engineering", "Algorithms", "Databases", "Architecture"]
+      },
+      "sena": {
+        "degree": "Technologist in Software Analysis and Development",
+        "period": "2019 – 2023",
+        "description": "Completed elective and practical stages of the ADSI program at SENA. Pending final certification. Strong foundation in programming, web development, and project methodology.",
+        "tags": ["Programming", "Web Development", "Project Methodology", "ADSI"]
       }
     }
   },

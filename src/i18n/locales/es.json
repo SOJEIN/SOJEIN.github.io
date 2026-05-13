@@ -3,6 +3,7 @@
     "home": "Inicio",
     "about": "Acerca de",
     "experience": "Experiencia",
+    "education": "Educación",
     "projects": "Proyectos",
     "contact": "Contacto"
   },
@@ -48,7 +49,7 @@
     "items": {
       "aoa": {
         "role": "Desarrollador Full Stack",
-        "period": "Dic 2025 – Actualidad",
+        "period": "Dic 2025 – Mar 2026",
         "achievements": [
           "Desarrollo e implementación de nuevas funcionalidades usando React y JavaScript, asegurando mantenibilidad y escalabilidad.",
           "Desarrollo backend con Laravel y PHP, diseñando y optimizando APIs y lógica de negocio.",
@@ -147,6 +148,26 @@
       "fotostory": {
         "title": "FotoStory",
         "description": "Plataforma social de fotos con autenticación Google, galería interactiva, likes y comentarios en tiempo real. Construida con React + Vite y Firebase."
+      }
+    }
+  },
+  "education": {
+    "tag": "Educación",
+    "title": "Formación académica",
+    "inProgress": "En curso",
+    "completed": "Completado",
+    "items": {
+      "cun": {
+        "degree": "Ingeniería de Sistemas",
+        "period": "2022 – Actualidad",
+        "description": "Carrera de Ingeniería de Sistemas en la Corporación Unificada Nacional de Educación Superior. Enfocada en desarrollo de software, algoritmos, bases de datos y arquitectura de sistemas.",
+        "tags": ["Ingeniería de Software", "Algoritmos", "Bases de datos", "Arquitectura"]
+      },
+      "sena": {
+        "degree": "Tecnólogo en Análisis y Desarrollo de Software",
+        "period": "2019 – 2023",
+        "description": "Completé las etapas electiva y de práctica del programa ADSI en el SENA. Pendiente de certificación final. Bases sólidas en programación, desarrollo web y metodología de proyectos.",
+        "tags": ["Programación", "Desarrollo Web", "Metodología", "ADSI"]
       }
     }
   },

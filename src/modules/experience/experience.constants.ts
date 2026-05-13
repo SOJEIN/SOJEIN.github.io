@@ -5,7 +5,7 @@ export const EXPERIENCES: Experience[] = [
     id: 'aoa',
     company: 'Aoa',
     stack: ['React', 'JavaScript', 'Laravel', 'PHP', 'SQL', 'MongoDB'],
-    current: true,
+    current: false,
   },
   {
     id: 'growtty',

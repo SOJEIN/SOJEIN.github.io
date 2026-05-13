@@ -43,6 +43,26 @@ const CardWrapper = styled(motion.div)<{
   ${({ $rowSpan }) => $rowSpan && `grid-row: span ${$rowSpan};`}
   ${({ $variant }) => variantStyles[$variant]}
 
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle 220px at var(--spotlight-x, -200px) var(--spotlight-y, -200px),
+      rgba(99, 102, 241, 0.09),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
   @media (max-width: 768px) {
     grid-column: span 1 !important;
     grid-row: span 1 !important;
@@ -66,9 +86,17 @@ export const BentoCard: React.FC<BentoCardProps> = ({
   accent,
   className,
   onClick,
+  onMouseMove,
   ...motionProps
 }) => {
   const resolvedVariant: CardVariant = variant ?? (accent ? 'accent' : 'default');
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--spotlight-x', `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty('--spotlight-y', `${e.clientY - rect.top}px`);
+    onMouseMove?.(e);
+  };
 
   return (
     <CardWrapper
@@ -77,6 +105,7 @@ export const BentoCard: React.FC<BentoCardProps> = ({
       $variant={resolvedVariant}
       className={className}
       onClick={onClick}
+      onMouseMove={handleMouseMove}
       whileHover={{
         scale: 1.01,
         borderColor: 'var(--card-hover-border)',

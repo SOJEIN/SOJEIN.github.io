@@ -2,6 +2,7 @@ import React from 'react';
 
 import { About } from './modules/about/About';
 import { Contact } from './modules/contact/Contact';
+import { Education } from './modules/education/Education';
 import { Experience } from './modules/experience/Experience';
 import { HomePage } from './modules/home/HomePage';
 import { ProjectsPage } from './modules/projects/Projects';
@@ -18,6 +19,7 @@ export default function App({ mode, toggleTheme }: AppProps) {
       <HomePage />
       <About />
       <Experience />
+      <Education />
       <ProjectsPage />
       <Contact />
     </Layout>
