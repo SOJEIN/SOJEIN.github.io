@@ -109,7 +109,8 @@
     "featured": "Destaque",
     "github": "GitHub",
     "liveDemo": "Demo ao vivo",
-    "downloadApk": "Baixar APK",
+    "downloadAndroid": "Android",
+    "downloadIos": "iOS",
     "filters": {
       "all": "Todos",
       "fullstack": "Full Stack",

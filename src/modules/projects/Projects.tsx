@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FiArrowUpRight, FiDownload, FiGithub, FiStar } from 'react-icons/fi';
+import { FiArrowUpRight, FiGithub, FiStar } from 'react-icons/fi';
+import { IoLogoAndroid, IoLogoApple } from 'react-icons/io5';
 import styled from 'styled-components';
 
 import { fadeUp } from '@/shared/animations/variants';
@@ -224,7 +225,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, featured }) =
         )}
         {project.apkUrl && (
           <CardLink href={project.apkUrl} download>
-            <FiDownload size={14} /> {t('projects.downloadApk')}
+            <IoLogoAndroid size={14} /> {t('projects.downloadAndroid')}
+          </CardLink>
+        )}
+        {project.iosUrl && (
+          <CardLink href={project.iosUrl} target="_blank" rel="noopener noreferrer">
+            <IoLogoApple size={14} /> {t('projects.downloadIos')}
           </CardLink>
         )}
       </LinksRow>

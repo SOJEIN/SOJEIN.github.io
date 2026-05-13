@@ -5,5 +5,6 @@ export interface Project {
   githubUrl: string;
   demoUrl?: string;
   apkUrl?: string;
+  iosUrl?: string;
   featured?: boolean;
 }
