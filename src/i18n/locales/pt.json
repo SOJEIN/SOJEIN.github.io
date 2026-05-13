@@ -137,6 +137,10 @@
         "title": "Orbit",
         "description": "App móvel de produtividade em React Native para gerenciar rotinas e tarefas diárias. Calendário integrado, sincronização Firebase em tempo real e arquitetura Feature-Sliced."
       },
+      "movies-now": {
+        "title": "Movies Now",
+        "description": "App React Native para descobrir filmes e séries via API TMDb. Categorias curadas, reprodução de vídeo, avaliações e informações detalhadas sobre o conteúdo."
+      },
       "fotostory": {
         "title": "FotoStory",
         "description": "Plataforma social de fotos com autenticação Google, galeria interativa, curtidas e comentários em tempo real. Construída com React + Vite e Firebase."

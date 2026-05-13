@@ -45,6 +45,13 @@ export const PROJECTS: Project[] = [
     featured: false,
   },
   {
+    id: 'movies-now',
+    stack: ['React Native', 'Expo', 'TMDb API', 'Axios', 'React Navigation'],
+    category: 'mobile',
+    githubUrl: 'https://github.com/SOJEIN/Movies_now',
+    featured: false,
+  },
+  {
     id: 'fotostory',
     stack: ['React', 'Vite', 'Firebase', 'Zustand', 'Material-UI'],
     category: 'frontend',

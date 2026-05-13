@@ -137,6 +137,10 @@
         "title": "Orbit",
         "description": "React Native productivity app for managing daily routines and one-time tasks. Calendar view, real-time Firebase sync, Zustand + RTK Query state management."
       },
+      "movies-now": {
+        "title": "Movies Now",
+        "description": "React Native streaming app for discovering movies and TV series via TMDb API. Features curated categories, video playback, ratings, and detailed content info."
+      },
       "fotostory": {
         "title": "FotoStory",
         "description": "Social photo-sharing platform with Google authentication, interactive gallery, likes, and real-time comments. Built with React + Vite and Firebase."
