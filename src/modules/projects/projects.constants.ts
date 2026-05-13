@@ -4,6 +4,7 @@ export const CATEGORY_COLORS: Record<Project['category'], { bg: string; text: st
   fullstack: { bg: 'rgba(6, 182, 212, 0.1)', text: '#06b6d4', bar: '#06b6d4' },
   frontend: { bg: 'rgba(99, 102, 241, 0.1)', text: 'var(--accent)', bar: '#6366f1' },
   backend: { bg: 'rgba(139, 92, 246, 0.1)', text: '#8b5cf6', bar: '#8b5cf6' },
+  mobile: { bg: 'rgba(34, 197, 94, 0.1)', text: '#22c55e', bar: '#22c55e' },
 };
 
 export const PROJECTS: Project[] = [
@@ -39,7 +40,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'orbit',
     stack: ['React Native', 'TypeScript', 'Firebase', 'Zustand', 'RTK Query'],
-    category: 'frontend',
+    category: 'mobile',
     githubUrl: 'https://github.com/SOJEIN/Orbit',
     featured: false,
   },

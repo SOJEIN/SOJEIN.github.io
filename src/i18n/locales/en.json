@@ -113,7 +113,8 @@
       "all": "All",
       "fullstack": "Full Stack",
       "frontend": "Frontend",
-      "backend": "Backend"
+      "backend": "Backend",
+      "mobile": "Mobile"
     },
     "items": {
       "billing-system": {

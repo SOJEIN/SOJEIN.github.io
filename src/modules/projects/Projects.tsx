@@ -258,6 +258,7 @@ export const ProjectsPage: React.FC = () => {
     { labelKey: 'projects.filters.fullstack', value: 'fullstack' },
     { labelKey: 'projects.filters.frontend', value: 'frontend' },
     { labelKey: 'projects.filters.backend', value: 'backend' },
+    { labelKey: 'projects.filters.mobile', value: 'mobile' },
   ];
 
   const filtered = PROJECTS.filter((p) => filter === 'all' || p.category === filter);
