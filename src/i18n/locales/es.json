@@ -4,6 +4,7 @@
     "about": "Acerca de",
     "experience": "Experiencia",
     "education": "Educación",
+    "certifications": "Certificaciones",
     "projects": "Proyectos",
     "contact": "Contacto"
   },
@@ -151,6 +152,29 @@
       }
     }
   },
+  "certifications": {
+    "tag": "Certificaciones",
+    "title": "Cursos y certificaciones",
+    "viewCredential": "Ver credencial",
+    "viewPdf": "Ver PDF",
+    "items": {
+      "cicce-sql": {
+        "title": "Curso complementario de base de datos SQL",
+        "date": "Dic 2021",
+        "tags": ["SQL", "MySQL", "Bases de datos", "Bootstrap", "Herramientas de desarrollo"]
+      },
+      "udemy-unity-intro": {
+        "title": "Introducción a Unity® 2021",
+        "date": "Ene 2024",
+        "tags": ["Unity", "C#", "Desarrollo de videojuegos", "3D"]
+      },
+      "udemy-csharp-unity": {
+        "title": "C# y Unity",
+        "date": "2023",
+        "tags": ["C#", "Unity", "POO", "Desarrollo de videojuegos"]
+      }
+    }
+  },
   "education": {
     "tag": "Educación",
     "title": "Formación académica",
@@ -165,7 +189,7 @@
       },
       "sena": {
         "degree": "Tecnólogo en Análisis y Desarrollo de Software",
-        "period": "2019 – 2023",
+        "period": "2016 – 2018",
         "description": "Completé las etapas electiva y de práctica del programa ADSI en el SENA. Pendiente de certificación final. Bases sólidas en programación, desarrollo web y metodología de proyectos.",
         "tags": ["Programación", "Desarrollo Web", "Metodología", "ADSI"]
       }

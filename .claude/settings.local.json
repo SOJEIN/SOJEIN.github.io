@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(cd \"E:/Personales/portfolio\" && npm uninstall @mui/material @mui/icons-material @emotion/react @emotion/styled three @types/three react-bits 2>&1)",
-      "WebFetch(domain:github.com)",
-      "Bash(cd \"E:\\\\Personales\\\\portfolio\" && npm uninstall react-router-dom && npm install @emailjs/browser)"
-    ]
-  }
-}
