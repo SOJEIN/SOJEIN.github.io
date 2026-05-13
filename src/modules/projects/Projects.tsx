@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FiArrowUpRight, FiGithub, FiStar } from 'react-icons/fi';
+import { FiArrowUpRight, FiDownload, FiGithub, FiStar } from 'react-icons/fi';
 import styled from 'styled-components';
 
 import { fadeUp } from '@/shared/animations/variants';
@@ -220,6 +220,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, featured }) =
         {project.demoUrl && (
           <CardLink href={project.demoUrl} target="_blank" rel="noopener noreferrer">
             <FiArrowUpRight size={14} /> {t('projects.liveDemo')}
+          </CardLink>
+        )}
+        {project.apkUrl && (
+          <CardLink href={project.apkUrl} download>
+            <FiDownload size={14} /> {t('projects.downloadApk')}
           </CardLink>
         )}
       </LinksRow>

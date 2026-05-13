@@ -4,5 +4,6 @@ export interface Project {
   category: 'fullstack' | 'frontend' | 'backend' | 'mobile';
   githubUrl: string;
   demoUrl?: string;
+  apkUrl?: string;
   featured?: boolean;
 }

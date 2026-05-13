@@ -42,6 +42,7 @@ export const PROJECTS: Project[] = [
     stack: ['React Native', 'TypeScript', 'Firebase', 'Zustand', 'RTK Query'],
     category: 'mobile',
     githubUrl: 'https://github.com/SOJEIN/Orbit',
+    apkUrl: '/apk/Orbit-1.0.beta.apk',
     featured: false,
   },
   {
