@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0B1220;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111827;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="avatarClip">
+      <circle cx="160" cy="315" r="72"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Dot grid pattern -->
+  <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#334155" opacity="0.4"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Glow blob top-right -->
+  <ellipse cx="980" cy="120" rx="300" ry="200" fill="#6366f1" opacity="0.06"/>
+  <!-- Glow blob bottom-left -->
+  <ellipse cx="200" cy="520" rx="250" ry="180" fill="#8b5cf6" opacity="0.05"/>
+
+  <!-- Accent bar top -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+
+  <!-- Main card -->
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="url(#card)" opacity="0.9"/>
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Left glow accent on card -->
+  <rect x="60" y="60" width="4" height="510" rx="2" fill="url(#accent)"/>
+
+  <!-- Avatar circle background -->
+  <circle cx="160" cy="315" r="80" fill="#1e293b" stroke="#6366f1" stroke-width="2" opacity="0.8"/>
+  <!-- Avatar placeholder — letter J -->
+  <circle cx="160" cy="315" r="72" fill="#0f172a"/>
+  <text x="160" y="336" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="52" font-weight="700" fill="url(#accent)">J</text>
+
+  <!-- Online dot -->
+  <circle cx="220" cy="375" r="12" fill="#0B1220"/>
+  <circle cx="220" cy="375" r="8" fill="#22c55e"/>
+
+  <!-- Main content area -->
+  <!-- Name -->
+  <text x="290" y="270" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="700" fill="#f8fafc" letter-spacing="-1">Jeisson Ochoa</text>
+
+  <!-- Role with gradient underline -->
+  <text x="290" y="318" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="500" fill="#94a3b8">Full Stack Developer</text>
+  <rect x="290" y="328" width="230" height="3" rx="1.5" fill="url(#accent)"/>
+
+  <!-- Location -->
+  <text x="290" y="370" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#64748b">📍 Bogotá, Colombia · Remote-friendly</text>
+
+  <!-- Tech pills -->
+  <g transform="translate(290, 400)">
+    <!-- React -->
+    <rect x="0" y="0" width="80" height="30" rx="15" fill="#61dafb" opacity="0.12"/>
+    <rect x="0" y="0" width="80" height="30" rx="15" fill="none" stroke="#61dafb" stroke-width="1" opacity="0.4"/>
+    <text x="40" y="20" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#61dafb">React</text>
+
+    <!-- TypeScript -->
+    <rect x="90" y="0" width="108" height="30" rx="15" fill="#3178c6" opacity="0.12"/>
+    <rect x="90" y="0" width="108" height="30" rx="15" fill="none" stroke="#3178c6" stroke-width="1" opacity="0.4"/>
+    <text x="144" y="20" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#3178c6">TypeScript</text>
+
+    <!-- Node.js -->
+    <rect x="208" y="0" width="84" height="30" rx="15" fill="#339933" opacity="0.12"/>
+    <rect x="208" y="0" width="84" height="30" rx="15" fill="none" stroke="#339933" stroke-width="1" opacity="0.4"/>
+    <text x="250" y="20" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#339933">Node.js</text>
+
+    <!-- React Native -->
+    <rect x="302" y="0" width="122" height="30" rx="15" fill="#61dafb" opacity="0.08"/>
+    <rect x="302" y="0" width="122" height="30" rx="15" fill="none" stroke="#61dafb" stroke-width="1" opacity="0.3"/>
+    <text x="363" y="20" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#61dafb" opacity="0.8">React Native</text>
+
+    <!-- Laravel -->
+    <rect x="434" y="0" width="82" height="30" rx="15" fill="#ff2d20" opacity="0.12"/>
+    <rect x="434" y="0" width="82" height="30" rx="15" fill="none" stroke="#ff2d20" stroke-width="1" opacity="0.4"/>
+    <text x="475" y="20" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#ff2d20">Laravel</text>
+  </g>
+
+  <!-- Divider -->
+  <line x1="720" y1="120" x2="720" y2="510" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- Stats right panel -->
+  <!-- Stat 1: Experience -->
+  <g transform="translate(780, 180)">
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="54" font-weight="800" fill="url(#accent)" filter="url(#glow)">6+</text>
+    <text x="0" y="36" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#64748b" font-weight="500">años de experiencia</text>
+  </g>
+
+  <!-- Stat 2: Projects -->
+  <g transform="translate(780, 300)">
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="54" font-weight="800" fill="url(#accent)" filter="url(#glow)">25+</text>
+    <text x="0" y="36" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#64748b" font-weight="500">proyectos entregados</text>
+  </g>
+
+  <!-- URL at bottom right -->
+  <text x="1100" y="530" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="15" fill="#475569">sojein.github.io</text>
+
+  <!-- Decorative circles corner -->
+  <circle cx="1110" cy="120" r="40" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.3"/>
+  <circle cx="1110" cy="120" r="60" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.15"/>
+  <circle cx="1110" cy="120" r="80" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.07"/>
+</svg>
